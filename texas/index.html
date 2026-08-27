@@ -91,17 +91,16 @@
   .fl .meta{font-size:12.5px; color:var(--ink3); margin-top:8px; border-top:1px dashed var(--line2); padding-top:8px;}
   .fl-note{font-size:12.5px; color:var(--ink3); margin-top:10px;}
 
-  /* ---- countdown + current task ---- */
-  .cd{margin-top:15px; background:linear-gradient(140deg,var(--accent-bg),var(--panel) 70%); border:1px solid var(--line2); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 16px 12px;}
-  .cd-top{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; margin-bottom:11px;}
-  .cd-label{font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.5px;}
-  .cd-when{font-size:12.5px; color:var(--ink2);}
-  .cd-nums{display:flex; gap:10px;}
-  .cdbox{flex:1; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:9px 4px 7px; text-align:center;}
-  .cdbox b{display:block; font-size:31px; line-height:1.05; font-weight:800; color:var(--accent); font-variant-numeric:tabular-nums;}
-  .cdbox span{font-size:11.5px; color:var(--ink3);}
-  .cd-now{font-size:19px; font-weight:800; color:var(--accent);}
-  .cd-now small{display:block; font-size:13.5px; font-weight:500; color:var(--ink2); margin-top:4px; line-height:1.45;}
+  /* ---- NOW card: next event + countdown + current task ---- */
+  .cd{margin-top:15px; background:linear-gradient(140deg,var(--accent-bg),var(--panel) 72%); border:1px solid var(--line2); border-radius:var(--radius); box-shadow:var(--shadow); padding:13px 16px 12px;}
+  .cd-lbl{display:flex; align-items:center; gap:7px; font-size:10.5px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--ink3); margin-bottom:9px;}
+  .pulse{width:8px; height:8px; border-radius:50%; background:var(--d1); box-shadow:0 0 0 0 rgba(192,57,43,.6); animation:pulse 2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,57,43,.55);}70%{box-shadow:0 0 0 9px rgba(192,57,43,0);}100%{box-shadow:0 0 0 0 rgba(192,57,43,0);}}
+  .cd-title{margin:0; font-size:19px; font-weight:800; line-height:1.25; color:var(--ink);}
+  .cd-meta{margin:3px 0 0; font-size:13px; color:var(--ink2);}
+  .cd-count{margin-top:9px; font-size:30px; font-weight:800; color:var(--accent); font-variant-numeric:tabular-nums; letter-spacing:.01em; line-height:1.1;
+            font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;}
+  .cd-count small{font-size:12.5px; font-weight:500; color:var(--ink3); letter-spacing:.05em; margin-left:2px;}
   .cd-task{display:flex; align-items:center; gap:9px; margin-top:12px; padding-top:11px; border-top:1px dashed var(--line2); font-size:14px; color:var(--ink); text-decoration:none;}
   .cd-task .k{flex:none; font-size:11.5px; font-weight:700; color:#fff; background:var(--d1); padding:2px 9px; border-radius:9px;}
   .cd-task .v{flex:1; font-weight:600;}
@@ -175,13 +174,10 @@
       <span class="chip">🎟️ NASA / Alamo 待购票</span>
     </div>
     <div class="cd">
-      <div class="cd-top"><span class="cd-label" id="cdLabel">距离出发</span><span class="cd-when" id="cdWhen">9/4 周五 08:17 · ONT ✈ DFW</span></div>
-      <div class="cd-nums" id="cdNums">
-        <div class="cdbox"><b id="cdD">–</b><span>天</span></div>
-        <div class="cdbox"><b id="cdH">–</b><span>小时</span></div>
-        <div class="cdbox"><b id="cdM">–</b><span>分钟</span></div>
-      </div>
-      <div class="cd-now" id="cdNow" style="display:none;"></div>
+      <div class="cd-lbl"><span class="pulse" aria-hidden="true"></span>此刻关注 · NOW</div>
+      <p class="cd-title" id="nowTitle">加载中…</p>
+      <p class="cd-meta" id="nowMeta"></p>
+      <div class="cd-count" id="countdown"></div>
       <a class="cd-task" id="cdTask" href="#todo"></a>
     </div>
   </div>
@@ -500,46 +496,46 @@
     try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
   }
 
-  /* ---- 顶部倒计时 + 当前待办：出发前倒计时 → 旅途中显示当天 → 结束后收尾 ---- */
-  var DEPART=Date.UTC(2026,8,4,15,17);   // 9/4 08:17 太平洋时间起飞
-  var LANDED=Date.UTC(2026,8,8,15,28);   // 9/8 08:28 落地 LAX
-  var DAYS=[
-    ['2026-09-04','08:17 ONT 起飞 → 13:31 抵 DFW → 沃斯堡长角牛 + Billy Bob\'s'],
-    ['2026-09-05','达拉斯艺术半日 → I-45 南下 → Kemah 夜游'],
-    ['2026-09-06','NASA 太空中心 → 直奔布朗斯维尔'],
-    ['2026-09-07','星舰基地 → 圣安东尼奥 → 夜抵奥斯汀'],
-    ['2026-09-08','04:45 起床，07:15 AUS 起飞回加州']
+  /* ---- 顶部 NOW 卡片：倒计时到下一个行程事件 + 当前待办 ---- */
+  var EVENTS=[
+    {t:'2026-09-04T08:17:00-07:00', title:'ONT ✈ DFW 起飞',            meta:'Frontier 4690 · 3h14m 直飞 · 建议 06:15 到机场'},
+    {t:'2026-09-04T13:31:00-05:00', title:'抵达达拉斯 DFW · 提车',      meta:'取行李 → 租车柜台 → 出发去沃斯堡'},
+    {t:'2026-09-04T16:00:00-05:00', title:'长角牛驱赶 Cattle Drive',    meta:'Fort Worth Stockyards · Exchange Ave · 免费'},
+    {t:'2026-09-04T19:30:00-05:00', title:"Billy Bob's Texas",          meta:'世界最大乡村夜店 · 20:30 / 21:30 两场骑公牛'},
+    {t:'2026-09-05T11:00:00-05:00', title:'达拉斯艺术博物馆',            meta:'免费 · 周一闭馆，只有今天能看'},
+    {t:'2026-09-05T12:30:00-05:00', title:"Terry Black's 德州烤肉",     meta:'不可预约 · 排队 30–45 分钟 · 必点 Brisket'},
+    {t:'2026-09-05T17:00:00-05:00', title:"Buc-ee's 巨型便利店",        meta:'Madisonville · 补能 + Beaver Nuggets'},
+    {t:'2026-09-05T19:45:00-05:00', title:'Kemah Boardwalk 海滨夜游',   meta:'摩天轮看海湾夜景 · 距酒店 15 分钟'},
+    {t:'2026-09-06T09:30:00-05:00', title:'NASA 约翰逊太空中心',        meta:'开门即入场 · 劳工节周末人多'},
+    {t:'2026-09-06T10:30:00-05:00', title:'Tram Tour 电车游览',         meta:'土星五号 + 阿波罗控制中心 · 需预约槽位'},
+    {t:'2026-09-06T14:30:00-05:00', title:'南下布朗斯维尔',             meta:'I-69E / US-77 · 约 5 小时 · 轮换驾驶'},
+    {t:'2026-09-07T07:45:00-05:00', title:'SpaceX Starbase 🚀',        meta:'TX-4 开到尽头 · 出发前查封路公告'},
+    {t:'2026-09-07T15:30:00-05:00', title:'Mission San José',          meta:'德州传道院之王 · 园区 17:00 关'},
+    {t:'2026-09-07T16:45:00-05:00', title:'The Alamo 阿拉莫',           meta:'免费但需预约 timed entry · 17:30 关门'},
+    {t:'2026-09-07T18:00:00-05:00', title:'River Walk 河畔晚餐',        meta:'Tex-Mex + 玛格丽特'},
+    {t:'2026-09-07T21:45:00-05:00', title:'德州议会大厦夜景',            meta:'粉红花岗岩打灯 · 广场全天开放'},
+    {t:'2026-09-08T05:15:00-05:00', title:'AUS 机场还车',              meta:'04:45 起床退房 · 加满油/充够电'},
+    {t:'2026-09-08T07:15:00-05:00', title:'AUS ✈ LAX 起飞回加州',      meta:'Delta DL306 · 08:28 落地，接上周二上午'}
   ];
+  var TRIP_END=new Date('2026-09-08T08:28:00-07:00').getTime();
   function pad(n){ return String(n).padStart(2,'0'); }
   function updateHero(){
-    var label=document.getElementById('cdLabel'), when=document.getElementById('cdWhen'),
-        nums=document.getElementById('cdNums'), nowBox=document.getElementById('cdNow'),
-        task=document.getElementById('cdTask');
-    if(!label) return;
-    var t=Date.now(), d=new Date();
-    var today=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-    if(t<DEPART){
-      var ms=DEPART-t;
-      document.getElementById('cdD').textContent=Math.floor(ms/86400000);
-      document.getElementById('cdH').textContent=pad(Math.floor(ms/3600000)%24);
-      document.getElementById('cdM').textContent=pad(Math.floor(ms/60000)%60);
-      label.textContent='距离出发';
-      when.textContent='9/4 周五 08:17 · ONT ✈ DFW';
-      nums.style.display=''; nowBox.style.display='none';
+    var nt=document.getElementById('nowTitle'), nm=document.getElementById('nowMeta'),
+        cd=document.getElementById('countdown'), task=document.getElementById('cdTask');
+    if(!nt) return;
+    var ms=Date.now(), next=null;
+    for(var i=0;i<EVENTS.length;i++){ if(new Date(EVENTS[i].t).getTime()>ms){ next=EVENTS[i]; break; } }
+    if(!next){
+      nt.textContent = ms>TRIP_END ? '旅程圆满结束 ✦' : '行程进行中';
+      nm.textContent = ms>TRIP_END ? '期待下一本 Travel Book' : '';
+      cd.textContent = '';
     }else{
-      nums.style.display='none'; nowBox.style.display='';
-      var idx=-1;
-      for(var i=0;i<DAYS.length;i++){ if(DAYS[i][0]===today){ idx=i; break; } }
-      if(t>=LANDED || idx<0){
-        label.textContent='旅程完成';
-        when.textContent='2026 劳工节 · 德州';
-        nowBox.innerHTML='🎉 旅程圆满结束<small>期待下一本 Travel Book</small>';
-      }else{
-        label.textContent='旅途中';
-        when.textContent='第 '+(idx+1)+' / '+DAYS.length+' 天';
-        nowBox.innerHTML='📍 今天 · D'+(idx+1)+'<small></small>';
-        nowBox.querySelector('small').textContent=DAYS[idx][1];
-      }
+      nt.textContent=next.title; nm.textContent=next.meta;
+      var s=Math.floor(Math.max(0,new Date(next.t).getTime()-ms)/1000);
+      var d=Math.floor(s/86400); s-=d*86400;
+      var h=Math.floor(s/3600);  s-=h*3600;
+      var m=Math.floor(s/60);    s-=m*60;
+      cd.innerHTML=(d>0?d+'天 ':'')+pad(h)+':'+pad(m)+':'+pad(s)+' <small>后</small>';
     }
     // 当前待办 = 清单里第一条未勾选的
     var first=null;
@@ -581,7 +577,7 @@
   });
   refresh();
 
-  setInterval(updateHero,20000);
+  setInterval(updateHero,1000);
 })();
 </script>
 </body>
