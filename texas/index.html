@@ -91,15 +91,9 @@
   .fl .meta{font-size:12.5px; color:var(--ink3); margin-top:8px; border-top:1px dashed var(--line2); padding-top:8px;}
   .fl-note{font-size:12.5px; color:var(--ink3); margin-top:10px;}
 
-  /* ---- change log ---- */
-  details.chg{margin-top:12px; background:var(--accent-bg); border-radius:12px; padding:2px 0;}
-  details.chg summary{cursor:pointer; padding:10px 14px; font-size:14px; font-weight:600; color:var(--accent); list-style:none;}
-  details.chg summary::-webkit-details-marker{display:none;}
-  details.chg summary::after{content:'▾'; float:right; transition:transform .15s;}
-  details.chg[open] summary::after{transform:rotate(180deg);}
-  details.chg .body{padding:0 16px 12px; font-size:13.5px; color:var(--ink2);}
-  details.chg .body li{margin-bottom:6px;}
-  details.chg .body b{color:var(--ink);}
+  /* ---- next-up strip ---- */
+  .next{margin-top:14px; background:var(--accent-bg); color:var(--accent); border-radius:12px; padding:10px 15px; font-size:14px; font-weight:500;}
+  .next b{font-weight:700;}
 
   /* ---- day cards ---- */
   .day{margin-bottom:16px;}
@@ -166,18 +160,9 @@
       <span class="chip ok">✈️ 往返机票已出票</span>
       <span class="chip warn">🚗 租车待订</span>
       <span class="chip warn" id="hotelChip">🏨 酒店 0/4</span>
-      <span class="chip">🎟️ Rodeo / NASA / Alamo 待购票</span>
+      <span class="chip">🎟️ NASA / Alamo 待购票</span>
     </div>
-    <details class="chg">
-      <summary>📌 行程 V2 —— 相比初版攻略改了什么？</summary>
-      <div class="body"><ul>
-        <li><b>机票已出票，时间和原计划不同：</b>去程不是周五晚上，而是 9/4 早上 8:17 ONT 起飞、下午 13:31 到 DFW —— 白捡整个周五下午+晚上；回程 9/8 早上 7:15 AUS 起飞 —— 周二早上完全没有游览时间。全部行程据此整体前移。</li>
-        <li><b>Rodeo 周六晚 → 周五晚：</b>Cowtown Coliseum 的 Stockyards Championship Rodeo 周五、周六晚都有场次，落地当天直奔沃斯堡看周五场。</li>
-        <li><b>取消周六半夜狂奔：</b>原方案 21:30 看完 Rodeo 再夜驾 2.5 小时住 Huntsville。现在周六白天逛完达拉斯从容南下，Buc-ee's 白天打卡，夜宿 NASA 旁的 Webster/Clear Lake。</li>
-        <li><b>Kemah 海滨挪到周六晚上：</b>酒店就在旁边，晚上木栈道游乐场更热闹；周日看完 NASA 直接南下，省 1.5 小时。</li>
-        <li><b>议会大厦周二早 → 周一晚：</b>7:15 的飞机 5 点多就要到机场，早上来不及；改成周一晚进城看粉红花岗岩夜景，顺路不绕行。</li>
-      </ul></div>
-    </details>
+    <div class="next" id="nextUp">⏳ 下一步 · <b>9/4（周五）08:17 ONT 起飞</b></div>
   </div>
 
   <nav class="toc">
@@ -253,7 +238,7 @@
       </svg>
       <div class="maplegend">
         <div class="leg"><span class="sw fly"></span><div><b>飞行段</b> · 9/4 ONT→DFW（已订）/ 9/8 AUS→LAX（已订）</div></div>
-        <div class="leg"><span class="sw" style="background:var(--d1)"></span><div><b>D1 · 9/4 周五</b> 落地 → 沃斯堡牛仔小镇 + Rodeo</div><span class="hrs">🚗 ~40min</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d1)"></span><div><b>D1 · 9/4 周五</b> 落地 → 沃斯堡长角牛 + Billy Bob's</div><span class="hrs">🚗 ~40min</span></div>
         <div class="leg"><span class="sw" style="background:var(--d2)"></span><div><b>D2 · 9/5 周六</b> 达拉斯艺术半日 → I-45 南下 → NASA 湾区</div><span class="hrs">🚗 ~4.5h</span></div>
         <div class="leg"><span class="sw" style="background:var(--d3)"></span><div><b>D3 · 9/6 周日</b> NASA 太空中心 → 直奔德州最南端</div><span class="hrs">🚗 ~5h</span></div>
         <div class="leg"><span class="sw" style="background:var(--d4)"></span><div><b>D4 · 9/7 周一</b> 星舰基地 → 圣安东尼奥 → 夜抵奥斯汀</div><span class="hrs">🚗 ~6h 累计</span></div>
@@ -290,16 +275,17 @@
     <div class="card day c1">
       <div class="day-head">
         <div class="day-num"><span class="d">9.4</span><span class="w">周五</span></div>
-        <div><div class="day-title">落地即牛仔 —— 沃斯堡 Rodeo 之夜</div>
+        <div><div class="day-title">落地即牛仔 —— Stockyards + Billy Bob's 之夜</div>
         <div class="day-route">ONT ✈ DFW → 沃斯堡 Stockyards · 车程约 40 分钟</div></div>
       </div>
       <div class="day-body">
         <div class="tl"><span class="t">08:17</span><div class="tx">Frontier 4690 从 ONT 起飞<small>提前 2 小时到机场；Frontier 值机柜台关闭较早，别踩点</small></div></div>
         <div class="tl"><span class="t">13:31</span><div class="tx">抵达 DFW，取行李、机场提车 <span class="tag tk">🚗 待订</span><small>一段式租车：DFW 取 → 9/8 清晨 AUS 还</small></div></div>
         <div class="tl"><span class="t">15:30</span><div class="tx">抵达沃斯堡 Fort Worth Stockyards，逛复古牛仔小镇<small>Exchange Ave 主街、牛仔名人堂、西部用品店（可以在这买顶牛仔帽进入状态）</small></div></div>
-        <div class="tl"><span class="t">16:00</span><div class="tx">看 Fort Worth Herd 长角牛游行 <span class="tag star">⭐ 免费</span><small>每天 11:30 与 16:00 两场，正好赶上下午场</small></div></div>
+        <div class="tl"><span class="t">16:00</span><div class="tx">看 Fort Worth Herd 长角牛驱赶 <span class="tag star">⭐ 免费</span><small>每天 11:30 与 16:00 两场：真牛仔穿 1880 年代行头，押着德州长角牛沿砖石老街走过，重现 Chisholm Trail 赶牛年代；前后可去 Livestock Exchange 楼后牛栏近距离合影、和牛仔聊天</small></div></div>
         <div class="tl"><span class="t">18:00</span><div class="tx">Stockyards 晚餐<small>Cooper's Old Time Pit BBQ / Riscky's Barbeque，都在主街上</small></div></div>
-        <div class="tl"><span class="t">19:30</span><div class="tx">Cowtown Coliseum · Stockyards Championship Rodeo <span class="tag tk">🎫 周五场</span><small>血脉喷张的牛仔竞技！开场时间以官网票面为准（约 19:30–20:00）</small></div></div>
+        <div class="tl"><span class="t">19:30</span><div class="tx">Billy Bob's Texas —— 世界最大乡村音乐夜店 <span class="tag star">⭐ 压轴</span><small>10 万平方英尺的 honky-tonk：现场乐队、two-step/排舞（有人教）、台球、骑拍照假牛；门票现场买即可（非演唱会日约 $10）</small></div></div>
+        <div class="tl"><span class="t">20:30</span><div class="tx">馆内竞技场看真·职业骑公牛 Live Pro Bull Riding <span class="tag star">⭐ 周五两场</span><small>20:30 与 21:30，普通门票就能看——rodeo 最刺激的压轴环节；若刷到 Rodeo 回流票则改回 Cowtown Coliseum</small></div></div>
         <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜1 · 待定</b> —— 建议沃斯堡 Stockyards 周边或达拉斯方向，Rodeo 散场就近入住（见清单 #5）</div></div>
       </div>
     </div>
@@ -400,8 +386,8 @@
         </div>
         <div class="todo" data-id="rodeo">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">4. Rodeo 门票 ×4（极易售罄）</div>
-          <div class="det">⚠️ 改订 <b>9/4（周五）晚场</b>，不是原计划的周六！Cowtown Coliseum · Stockyards Championship Rodeo。<a href="https://cowtowncoliseum.com/events" target="_blank" rel="noopener">cowtowncoliseum.com/events</a></div></div>
+          <div class="body"><div class="name">4. 周五晚 Billy Bob's：查 9/4 演出档期</div>
+          <div class="det">门票现场买即可（非演唱会日约 $10），骑牛表演 20:30/21:30 含在门票里；<b>若当晚有演唱会需单独购票</b>，先查档期：<a href="https://www.billybobstexas.com/events" target="_blank" rel="noopener">billybobstexas.com/events</a>。候补：偶尔刷一下 <a href="https://cowtowncoliseum.com/events" target="_blank" rel="noopener">Rodeo 回流票</a>，刷到就换回 Cowtown Coliseum</div></div>
         </div>
         <div class="todo" data-id="nasa">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
@@ -468,7 +454,7 @@
       <li><b>时差：</b>德州是中部时间，比加州快 2 小时。9/8 早上 7:15 的航班相当于加州凌晨 5:15 —— 周一晚在奥斯汀务必早睡。</li>
       <li><b>证件：</b>国内航班需要 REAL ID 合规证件（订票页已提示），出发前确认 4 人证件都没问题；北上 US-77 会经过 Border Patrol 内陆检查站，证件全程随身。</li>
       <li><b>天气：</b>9 月初德州依然 35°C+ 的酷热，防晒、帽子、大瓶水；Starbase 在海边风大，NASA 和车里冷气很足，备件薄外套。</li>
-      <li><b>排队心理预期：</b>Terry Black's 不可预约，排队 30–45 分钟是德州文化的一部分；劳工节周末 Rodeo / NASA / Alamo 人都多，能提前订的都提前订。</li>
+      <li><b>排队心理预期：</b>Terry Black's 不可预约，排队 30–45 分钟是德州文化的一部分；劳工节周末 NASA / Alamo 人都多，能提前订的都提前订。</li>
       <li><b>驾驶：</b>全程约 1,000 英里，D3/D4 是长途日 —— 两人轮换 + 辅助驾驶 + 每 2 小时进休息站；德州乡间公路限速 75 mph 但注意小镇测速。</li>
       <li><b>Starbase：</b>TX-4 是公共道路，看星舰免费，但火箭移运/测试时会封路 —— 前一晚一定查 Cameron County 公告（清单 #14）。</li>
     </ul></div>
@@ -517,6 +503,32 @@
     });
   });
   refresh();
+
+  /* ---- 「下一步」自动更新：出发前倒计时 → 旅途中显示当天 → 结束后收尾 ---- */
+  var DAYS=[
+    ['2026-09-04','✈️ 出发日 · 08:17 ONT 起飞 → 13:31 抵 DFW → 沃斯堡长角牛 + Billy Bob\'s'],
+    ['2026-09-05','D2 · 达拉斯艺术半日 → 南下 NASA 湾区 → Kemah 夜游'],
+    ['2026-09-06','D3 · NASA 太空中心 → 直奔布朗斯维尔'],
+    ['2026-09-07','D4 · 星舰基地 → 圣安东尼奥 → 夜抵奥斯汀'],
+    ['2026-09-08','D5 · 04:45 起床，07:15 AUS 起飞回加州']
+  ];
+  var nu=document.getElementById('nextUp');
+  if(nu){
+    var d=new Date();
+    var today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    if(today>DAYS[DAYS.length-1][0]){
+      nu.innerHTML='🎉 <b>旅程圆满结束</b> —— 期待下一本 Travel Book';
+    }else{
+      var cur=null;
+      for(var i=0;i<DAYS.length;i++){ if(DAYS[i][0]===today){ cur=DAYS[i]; break; } }
+      if(cur){
+        nu.innerHTML='📍 今天 · <b>'+cur[1]+'</b>';
+      }else{
+        var n=Math.round((new Date(2026,8,4)-new Date(d.getFullYear(),d.getMonth(),d.getDate()))/86400000);
+        nu.innerHTML='⏳ 距出发还有 <b>'+n+'</b> 天 · 下一步：<b>'+DAYS[0][1]+'</b>';
+      }
+    }
+  }
 })();
 </script>
 </body>
