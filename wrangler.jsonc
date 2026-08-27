@@ -1,0 +1,10 @@
+{
+  // 德州旅行手册 —— Workers 静态资产部署
+  // 连接本仓库后（Dashboard → Workers → Import a repository），
+  // 每次 push 到 main 自动发布到 texas.josietravelbook.workers.dev
+  "name": "texas",
+  "compatibility_date": "2026-08-27",
+  "assets": {
+    "directory": "./texas"
+  }
+}
