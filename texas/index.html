@@ -91,9 +91,21 @@
   .fl .meta{font-size:12.5px; color:var(--ink3); margin-top:8px; border-top:1px dashed var(--line2); padding-top:8px;}
   .fl-note{font-size:12.5px; color:var(--ink3); margin-top:10px;}
 
-  /* ---- next-up strip ---- */
-  .next{margin-top:14px; background:var(--accent-bg); color:var(--accent); border-radius:12px; padding:10px 15px; font-size:14px; font-weight:500;}
-  .next b{font-weight:700;}
+  /* ---- countdown + current task ---- */
+  .cd{margin-top:15px; background:linear-gradient(140deg,var(--accent-bg),var(--panel) 70%); border:1px solid var(--line2); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 16px 12px;}
+  .cd-top{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; margin-bottom:11px;}
+  .cd-label{font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.5px;}
+  .cd-when{font-size:12.5px; color:var(--ink2);}
+  .cd-nums{display:flex; gap:10px;}
+  .cdbox{flex:1; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:9px 4px 7px; text-align:center;}
+  .cdbox b{display:block; font-size:31px; line-height:1.05; font-weight:800; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .cdbox span{font-size:11.5px; color:var(--ink3);}
+  .cd-now{font-size:19px; font-weight:800; color:var(--accent);}
+  .cd-now small{display:block; font-size:13.5px; font-weight:500; color:var(--ink2); margin-top:4px; line-height:1.45;}
+  .cd-task{display:flex; align-items:center; gap:9px; margin-top:12px; padding-top:11px; border-top:1px dashed var(--line2); font-size:14px; color:var(--ink); text-decoration:none;}
+  .cd-task .k{flex:none; font-size:11.5px; font-weight:700; color:#fff; background:var(--d1); padding:2px 9px; border-radius:9px;}
+  .cd-task .v{flex:1; font-weight:600;}
+  .cd-task .go{flex:none; font-size:13px; color:var(--accent);}
 
   /* ---- day cards ---- */
   .day{margin-bottom:16px;}
@@ -162,7 +174,16 @@
       <span class="chip warn" id="hotelChip">🏨 酒店 0/4</span>
       <span class="chip">🎟️ NASA / Alamo 待购票</span>
     </div>
-    <div class="next" id="nextUp">⏳ 下一步 · <b>9/4（周五）08:17 ONT 起飞</b></div>
+    <div class="cd">
+      <div class="cd-top"><span class="cd-label" id="cdLabel">距离出发</span><span class="cd-when" id="cdWhen">9/4 周五 08:17 · ONT ✈ DFW</span></div>
+      <div class="cd-nums" id="cdNums">
+        <div class="cdbox"><b id="cdD">–</b><span>天</span></div>
+        <div class="cdbox"><b id="cdH">–</b><span>小时</span></div>
+        <div class="cdbox"><b id="cdM">–</b><span>分钟</span></div>
+      </div>
+      <div class="cd-now" id="cdNow" style="display:none;"></div>
+      <a class="cd-task" id="cdTask" href="#todo"></a>
+    </div>
   </div>
 
   <nav class="toc">
@@ -478,6 +499,61 @@
   function persist(){
     try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
   }
+
+  /* ---- 顶部倒计时 + 当前待办：出发前倒计时 → 旅途中显示当天 → 结束后收尾 ---- */
+  var DEPART=Date.UTC(2026,8,4,15,17);   // 9/4 08:17 太平洋时间起飞
+  var LANDED=Date.UTC(2026,8,8,15,28);   // 9/8 08:28 落地 LAX
+  var DAYS=[
+    ['2026-09-04','08:17 ONT 起飞 → 13:31 抵 DFW → 沃斯堡长角牛 + Billy Bob\'s'],
+    ['2026-09-05','达拉斯艺术半日 → I-45 南下 → Kemah 夜游'],
+    ['2026-09-06','NASA 太空中心 → 直奔布朗斯维尔'],
+    ['2026-09-07','星舰基地 → 圣安东尼奥 → 夜抵奥斯汀'],
+    ['2026-09-08','04:45 起床，07:15 AUS 起飞回加州']
+  ];
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function updateHero(){
+    var label=document.getElementById('cdLabel'), when=document.getElementById('cdWhen'),
+        nums=document.getElementById('cdNums'), nowBox=document.getElementById('cdNow'),
+        task=document.getElementById('cdTask');
+    if(!label) return;
+    var t=Date.now(), d=new Date();
+    var today=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    if(t<DEPART){
+      var ms=DEPART-t;
+      document.getElementById('cdD').textContent=Math.floor(ms/86400000);
+      document.getElementById('cdH').textContent=pad(Math.floor(ms/3600000)%24);
+      document.getElementById('cdM').textContent=pad(Math.floor(ms/60000)%60);
+      label.textContent='距离出发';
+      when.textContent='9/4 周五 08:17 · ONT ✈ DFW';
+      nums.style.display=''; nowBox.style.display='none';
+    }else{
+      nums.style.display='none'; nowBox.style.display='';
+      var idx=-1;
+      for(var i=0;i<DAYS.length;i++){ if(DAYS[i][0]===today){ idx=i; break; } }
+      if(t>=LANDED || idx<0){
+        label.textContent='旅程完成';
+        when.textContent='2026 劳工节 · 德州';
+        nowBox.innerHTML='🎉 旅程圆满结束<small>期待下一本 Travel Book</small>';
+      }else{
+        label.textContent='旅途中';
+        when.textContent='第 '+(idx+1)+' / '+DAYS.length+' 天';
+        nowBox.innerHTML='📍 今天 · D'+(idx+1)+'<small></small>';
+        nowBox.querySelector('small').textContent=DAYS[idx][1];
+      }
+    }
+    // 当前待办 = 清单里第一条未勾选的
+    var first=null;
+    for(var j=0;j<items.length;j++){ if(!stateOf(items[j])){ first=items[j]; break; } }
+    task.innerHTML='<span class="k"></span><span class="v"></span><span class="go">去清单 →</span>';
+    if(first){
+      task.querySelector('.k').textContent='当前待办';
+      task.querySelector('.v').textContent=first.querySelector('.name').textContent;
+    }else{
+      var k=task.querySelector('.k');
+      k.textContent='全部完成'; k.style.background='var(--done)';
+      task.querySelector('.v').textContent='待办清单已清空，安心出发 🎉';
+    }
+  }
   function refresh(){
     var done=0, hotels=0;
     items.forEach(function(el){
@@ -495,6 +571,7 @@
       hc.textContent='🏨 酒店 '+hotels+'/4';
       hc.className='chip '+(hotels>=4?'ok':'warn');
     }
+    updateHero();
   }
   items.forEach(function(el){
     el.querySelector('.box').addEventListener('click',function(){
@@ -504,31 +581,7 @@
   });
   refresh();
 
-  /* ---- 「下一步」自动更新：出发前倒计时 → 旅途中显示当天 → 结束后收尾 ---- */
-  var DAYS=[
-    ['2026-09-04','✈️ 出发日 · 08:17 ONT 起飞 → 13:31 抵 DFW → 沃斯堡长角牛 + Billy Bob\'s'],
-    ['2026-09-05','D2 · 达拉斯艺术半日 → 南下 NASA 湾区 → Kemah 夜游'],
-    ['2026-09-06','D3 · NASA 太空中心 → 直奔布朗斯维尔'],
-    ['2026-09-07','D4 · 星舰基地 → 圣安东尼奥 → 夜抵奥斯汀'],
-    ['2026-09-08','D5 · 04:45 起床，07:15 AUS 起飞回加州']
-  ];
-  var nu=document.getElementById('nextUp');
-  if(nu){
-    var d=new Date();
-    var today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    if(today>DAYS[DAYS.length-1][0]){
-      nu.innerHTML='🎉 <b>旅程圆满结束</b> —— 期待下一本 Travel Book';
-    }else{
-      var cur=null;
-      for(var i=0;i<DAYS.length;i++){ if(DAYS[i][0]===today){ cur=DAYS[i]; break; } }
-      if(cur){
-        nu.innerHTML='📍 今天 · <b>'+cur[1]+'</b>';
-      }else{
-        var n=Math.round((new Date(2026,8,4)-new Date(d.getFullYear(),d.getMonth(),d.getDate()))/86400000);
-        nu.innerHTML='⏳ 距出发还有 <b>'+n+'</b> 天 · 下一步：<b>'+DAYS[0][1]+'</b>';
-      }
-    }
-  }
+  setInterval(updateHero,20000);
 })();
 </script>
 </body>
