@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>德州牛仔之旅 · 2026 劳工节</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23bf5700'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle'%3E%F0%9F%A4%A0%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1b19" media="(prefers-color-scheme: dark)">
+<style>
+  :root{
+    --bg:#f4f1ea; --panel:#fffdf7; --ink:#2c2b28; --ink2:#6b6a63; --ink3:#9b998f;
+    --line:#e6e2d6; --line2:#d8d3c4;
+    --accent:#bf5700; --accent-bg:#faeadd;
+    --d1:#c0392b; --d1bg:#fbe9e7;
+    --d2:#a9701a; --d2bg:#fdefd6;
+    --d3:#2c6bb3; --d3bg:#e6f0fb;
+    --d4:#1f9d6b; --d4bg:#e3f4ec;
+    --d5:#6b6a63; --d5bg:#eeece4;
+    --done:#1f9d6b;
+    --map-land:#ece7da; --map-border:#c9c2ae;
+    --shadow:0 1px 2px rgba(60,50,30,.06),0 8px 24px rgba(60,50,30,.05);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1b19; --panel:#26241f; --ink:#eceae2; --ink2:#a8a69c; --ink3:#77756c;
+      --line:#37342d; --line2:#433f36;
+      --accent:#f0975a; --accent-bg:#3a2a1c;
+      --d1:#f0a89b; --d1bg:#38251f;
+      --d2:#e6bd6f; --d2bg:#352b17;
+      --d3:#8fbef0; --d3bg:#1e2c3d;
+      --d4:#4bc490; --d4bg:#1d3229;
+      --d5:#a8a69c; --d5bg:#2b2924;
+      --done:#4bc490;
+      --map-land:#2b2822; --map-border:#4a463c;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:16px 16px 70px;}
+  a{color:var(--accent);}
+
+  /* ---- hero ---- */
+  .hero{padding:22px 4px 14px;}
+  .hero h1{margin:0 0 6px; font-size:27px; line-height:1.25; letter-spacing:.5px;}
+  .hero .sub{color:var(--ink2); font-size:14.5px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .chip{font-size:13px; padding:5px 12px; border-radius:20px; background:var(--panel); border:1px solid var(--line2); color:var(--ink2); white-space:nowrap;}
+  .chip.ok{background:var(--d4bg); color:var(--d4); border-color:transparent; font-weight:600;}
+  .chip.warn{background:var(--d1bg); color:var(--d1); border-color:transparent; font-weight:600;}
+
+  /* ---- sticky nav ---- */
+  nav.toc{position:sticky; top:0; z-index:30; background:var(--bg); padding:10px 0 8px; margin:0 -4px 10px; display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  nav.toc a{flex:none; font-size:13.5px; text-decoration:none; color:var(--ink2); background:var(--panel); border:1px solid var(--line2); border-radius:20px; padding:6px 14px;}
+  nav.toc a:active{color:var(--accent);}
+
+  /* ---- sections ---- */
+  section{margin-bottom:26px;}
+  h2.sec{font-size:19px; margin:0 0 4px; display:flex; align-items:center; gap:8px;}
+  .sec-sub{color:var(--ink2); font-size:13.5px; margin-bottom:12px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;}
+
+  /* ---- map ---- */
+  .map-card{padding:10px 8px 4px;}
+  .map-card svg{width:100%; height:auto; display:block;}
+  .maplegend{display:flex; flex-direction:column; gap:6px; padding:10px 10px 14px;}
+  .leg{display:flex; align-items:baseline; gap:9px; font-size:13.5px; color:var(--ink2);}
+  .leg .sw{flex:none; width:22px; height:6px; border-radius:3px; transform:translateY(-2px);}
+  .leg .sw.fly{height:0; border-top:3px dashed var(--ink3); background:none; border-radius:0;}
+  .leg b{color:var(--ink); font-weight:600;}
+  .leg .hrs{margin-left:auto; font-size:12px; color:var(--ink3); white-space:nowrap;}
+
+  /* ---- flights ---- */
+  .fl-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:620px){ .fl-grid{grid-template-columns:1fr;} }
+  .fl{padding:15px 16px;}
+  .fl .top{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink2); margin-bottom:8px;}
+  .fl .pill{margin-left:auto; font-size:11.5px; font-weight:700; color:var(--d4); background:var(--d4bg); padding:2px 9px; border-radius:10px;}
+  .fl .route{display:flex; align-items:center; gap:10px; font-size:24px; font-weight:700; letter-spacing:1px;}
+  .fl .route .arr{flex:1; text-align:center; color:var(--ink3); font-size:13px; font-weight:400; border-bottom:2px solid var(--line2); line-height:.4; margin:0 2px;}
+  .fl .times{display:flex; justify-content:space-between; font-size:14px; color:var(--ink2); margin-top:6px;}
+  .fl .times b{color:var(--ink); font-size:16px;}
+  .fl .meta{font-size:12.5px; color:var(--ink3); margin-top:8px; border-top:1px dashed var(--line2); padding-top:8px;}
+  .fl-note{font-size:12.5px; color:var(--ink3); margin-top:10px;}
+
+  /* ---- change log ---- */
+  details.chg{margin-top:12px; background:var(--accent-bg); border-radius:12px; padding:2px 0;}
+  details.chg summary{cursor:pointer; padding:10px 14px; font-size:14px; font-weight:600; color:var(--accent); list-style:none;}
+  details.chg summary::-webkit-details-marker{display:none;}
+  details.chg summary::after{content:'▾'; float:right; transition:transform .15s;}
+  details.chg[open] summary::after{transform:rotate(180deg);}
+  details.chg .body{padding:0 16px 12px; font-size:13.5px; color:var(--ink2);}
+  details.chg .body li{margin-bottom:6px;}
+  details.chg .body b{color:var(--ink);}
+
+  /* ---- day cards ---- */
+  .day{margin-bottom:16px;}
+  .day-head{display:flex; align-items:center; gap:11px; padding:13px 15px 11px; border-bottom:1px solid var(--line);}
+  .day-num{flex:none; width:40px; height:40px; border-radius:11px; color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.05; font-weight:800;}
+  .day-num .d{font-size:15px;} .day-num .w{font-size:10px; font-weight:600; opacity:.9;}
+  .day.c1 .day-num{background:var(--d1);} .day.c2 .day-num{background:var(--d2);}
+  .day.c3 .day-num{background:var(--d3);} .day.c4 .day-num{background:var(--d4);}
+  .day.c5 .day-num{background:var(--d5);}
+  @media (prefers-color-scheme: dark){ .day .day-num{color:#1c1b19;} }
+  .day-title{font-size:16.5px; font-weight:700;}
+  .day-route{font-size:12.5px; color:var(--ink2); margin-top:1px;}
+  .day-body{padding:8px 15px 13px;}
+  .tl{display:flex; gap:11px; padding:6px 0; align-items:flex-start;}
+  .tl + .tl{border-top:1px dashed var(--line);}
+  .tl .t{flex:none; width:48px; font-size:12.5px; font-weight:700; color:var(--ink3); font-variant-numeric:tabular-nums; padding-top:2px;}
+  .day.c1 .tl .t{color:var(--d1);} .day.c2 .tl .t{color:var(--d2);}
+  .day.c3 .tl .t{color:var(--d3);} .day.c4 .tl .t{color:var(--d4);}
+  .day.c5 .tl .t{color:var(--d5);}
+  .tl .tx{flex:1; font-size:14.5px;}
+  .tl .tx small{display:block; color:var(--ink3); font-size:12.5px; margin-top:1px;}
+  .tag{display:inline-block; font-size:11px; font-weight:700; border-radius:8px; padding:1px 7px; margin-left:5px; vertical-align:1px; white-space:nowrap;}
+  .tag.tk{background:var(--d1bg); color:var(--d1);}
+  .tag.star{background:var(--d2bg); color:var(--d2);}
+  .tl.hotel{background:var(--bg); border:1px dashed var(--line2); border-radius:10px; padding:8px 10px; margin-top:8px;}
+  .tl.hotel .t{width:auto;}
+  .tl.hotel .tx{color:var(--ink2); font-size:13.5px;}
+
+  /* ---- checklist ---- */
+  .prog{display:flex; align-items:center; gap:10px; padding:13px 15px; border-bottom:1px solid var(--line);}
+  .prog .bar{flex:1; height:8px; border-radius:5px; background:var(--bg); overflow:hidden;}
+  .prog .bar i{display:block; height:100%; width:0; background:var(--done); border-radius:5px; transition:width .25s;}
+  .prog .n{font-size:13px; color:var(--ink2); font-variant-numeric:tabular-nums;}
+  .todo-group{padding:6px 10px 10px;}
+  .todo-group h3{font-size:13.5px; color:var(--ink2); margin:10px 6px 4px; font-weight:700;}
+  .todo{display:flex; gap:10px; padding:9px 8px; border-radius:10px; align-items:flex-start;}
+  .todo:hover{background:rgba(120,110,80,.06);}
+  .todo .box{flex:none; width:20px; height:20px; margin-top:2px; border-radius:6px; border:2px solid var(--line2); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;}
+  .todo .box svg{width:12px; height:12px; color:#fff; opacity:0;}
+  .todo.done .box{background:var(--done); border-color:var(--done);}
+  .todo.done .box svg{opacity:1;}
+  .todo .body{flex:1;}
+  .todo .name{font-size:14.5px; font-weight:600;}
+  .todo.done .name{color:var(--ink3); text-decoration:line-through;}
+  .todo .det{font-size:13px; color:var(--ink2); margin-top:2px;}
+  .todo.done .det{color:var(--ink3);}
+  .todo .det a{word-break:break-all;}
+
+  /* ---- tips ---- */
+  .tips{padding:6px 16px 14px;}
+  .tips li{margin:9px 0; font-size:14px; color:var(--ink2);}
+  .tips li b{color:var(--ink);}
+
+  footer{margin-top:34px; text-align:center; font-size:12.5px; color:var(--ink3);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>🤠 德州劳工节牛仔之旅</h1>
+    <div class="sub">2026.9.4（周五）— 9.8（周二）· 4 人 · 达拉斯落地 → 奥斯汀返程 · 全程自驾约 1,000 英里</div>
+    <div class="chips">
+      <span class="chip ok">✈️ 往返机票已出票</span>
+      <span class="chip warn">🚗 租车待订</span>
+      <span class="chip warn" id="hotelChip">🏨 酒店 0/4</span>
+      <span class="chip">🎟️ Rodeo / NASA / Alamo 待购票</span>
+    </div>
+    <details class="chg">
+      <summary>📌 行程 V2 —— 相比初版攻略改了什么？</summary>
+      <div class="body"><ul>
+        <li><b>机票已出票，时间和原计划不同：</b>去程不是周五晚上，而是 9/4 早上 8:17 ONT 起飞、下午 13:31 到 DFW —— 白捡整个周五下午+晚上；回程 9/8 早上 7:15 AUS 起飞 —— 周二早上完全没有游览时间。全部行程据此整体前移。</li>
+        <li><b>Rodeo 周六晚 → 周五晚：</b>Cowtown Coliseum 的 Stockyards Championship Rodeo 周五、周六晚都有场次，落地当天直奔沃斯堡看周五场。</li>
+        <li><b>取消周六半夜狂奔：</b>原方案 21:30 看完 Rodeo 再夜驾 2.5 小时住 Huntsville。现在周六白天逛完达拉斯从容南下，Buc-ee's 白天打卡，夜宿 NASA 旁的 Webster/Clear Lake。</li>
+        <li><b>Kemah 海滨挪到周六晚上：</b>酒店就在旁边，晚上木栈道游乐场更热闹；周日看完 NASA 直接南下，省 1.5 小时。</li>
+        <li><b>议会大厦周二早 → 周一晚：</b>7:15 的飞机 5 点多就要到机场，早上来不及；改成周一晚进城看粉红花岗岩夜景，顺路不绕行。</li>
+      </ul></div>
+    </details>
+  </div>
+
+  <nav class="toc">
+    <a href="#map">🗺️ 总览</a>
+    <a href="#flights">✈️ 航班</a>
+    <a href="#days">📅 每日行程</a>
+    <a href="#todo">✅ 待办清单</a>
+    <a href="#tips">💡 贴士</a>
+  </nav>
+
+  <!-- ============ 可视化总览 ============ -->
+  <section id="map">
+    <h2 class="sec">🗺️ 行程总览</h2>
+    <div class="sec-sub">从加州飞进德州北部的达拉斯，一路向南开到墨西哥边境的星舰基地，再折向西北经圣安东尼奥到奥斯汀飞回加州 —— 在地图上是一个大大的「南下再北上」的 V 字。</div>
+    <div class="card map-card">
+      <svg viewBox="0 0 744 719" role="img" aria-label="德州行程路线图：达拉斯—沃斯堡—NASA—布朗斯维尔/星舰基地—圣安东尼奥—奥斯汀">
+        <!-- 德州轮廓 -->
+        <path d="M218.7,29.5 L379.9,29.5 L379.9,149.8 L411.7,159.7 L456.8,178.3 L488.6,193.8 L531.1,201.9 L573.5,203.1 L618.6,195.7 L648.3,191.9 L696.0,220.5 L697.1,309.1 L713.0,342.6 L722.0,376.7 L713.0,407.7 L709.8,435.6 L704.5,449.9 L669.0,463.5 L653.0,475.9 L624.9,500.7 L573.5,531.7 L533.7,568.9 L520.5,603.0 L525.8,643.3 L531.1,677.4 L531.1,683.6 L515.2,687.9 L475.4,677.4 L433.0,658.8 L410.2,618.5 L406.4,587.5 L369.3,544.1 L353.4,512.5 L332.2,472.2 L297.7,447.4 L255.3,444.9 L228.8,482.1 L213.4,495.1 L188.5,474.7 L146.6,459.8 L120.1,407.7 L96.2,364.3 L35.2,323.4 L29.9,309.1 L217.6,309.1 L217.6,29.5 Z"
+              fill="var(--map-land)" stroke="var(--map-border)" stroke-width="2.5" stroke-linejoin="round"/>
+
+        <!-- 飞行段（虚线弧） -->
+        <path d="M20,296 Q270,222 536.9,253" fill="none" stroke="var(--ink3)" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round"/>
+        <path d="M499.8,415.8 Q260,392 20,384" fill="none" stroke="var(--ink3)" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round"/>
+        <text x="30" y="278" font-size="16" fill="var(--ink2)">✈️ 9/4 自加州 ONT 飞来</text>
+        <text x="30" y="416" font-size="16" fill="var(--ink2)">✈️ 9/8 清晨飞返 LAX</text>
+
+        <!-- D1 红：DFW→沃斯堡 -->
+        <path d="M536.9,252.7 L521.5,262.0" fill="none" stroke="var(--d1)" stroke-width="5" stroke-linecap="round"/>
+        <!-- D2 橙：沃斯堡→达拉斯→I-45→Webster/Kemah -->
+        <path d="M521.5,262.0 L549.6,260.1 L567.1,302.3 L588.9,342.0 L596.8,373.6 L615.9,388.5 L620.7,413.3 L626.0,447.4 L638.7,461.0 L644.0,461.0" fill="none" stroke="var(--d2)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- D3 蓝：Webster→布朗斯维尔 -->
+        <path d="M638.7,461.0 L605.3,475.3 L578.8,491.4 L539.0,506.3 L524.2,537.3 L503.5,569.5 L493.4,586.3 L496.6,619.7 L497.7,650.7 L501.9,668.7 L512.5,686.7" fill="none" stroke="var(--d3)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- D4 绿：布朗斯维尔→Starbase + 北上圣安东尼奥→奥斯汀（共线段稍向西偏移） -->
+        <path d="M512.5,686.7 L530.5,681.1" fill="none" stroke="var(--d4)" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M507.5,684.7 L496.9,668.7 L492.7,650.7 L488.4,586.3 L498.5,569.5 L479.6,536.0 L460.5,496.4 L460.0,468.5 L479.6,451.1 L489.2,439.9 L499.8,415.8" fill="none" stroke="var(--d4)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- 途经点（小空心点） -->
+        <g fill="var(--panel)" stroke="var(--ink3)" stroke-width="2.5">
+          <circle cx="596.8" cy="373.6" r="5"/>
+          <circle cx="626.0" cy="447.4" r="5"/>
+          <circle cx="644.0" cy="461.0" r="5"/>
+          <circle cx="530.5" cy="681.1" r="5.5"/>
+        </g>
+        <text x="608" y="368" font-size="15" fill="var(--ink2)">Buc-ee's 🦫</text>
+        <text x="576" y="440" font-size="15" fill="var(--ink2)">休斯顿</text>
+        <text x="652" y="454" font-size="15" fill="var(--ink2)">Kemah</text>
+        <text x="543" y="700" font-size="15" fill="var(--ink2)">🚀 SpaceX Starbase</text>
+
+        <!-- 过夜城市（实心大点 + 夜次） -->
+        <g stroke="var(--panel)" stroke-width="3">
+          <circle cx="536.9" cy="252.7" r="7" fill="var(--d1)"/>
+          <circle cx="521.5" cy="262.0" r="8" fill="var(--d1)"/>
+          <circle cx="549.6" cy="260.1" r="7" fill="var(--d2)"/>
+          <circle cx="638.7" cy="461.0" r="8" fill="var(--d2)"/>
+          <circle cx="512.5" cy="686.7" r="8" fill="var(--d3)"/>
+          <circle cx="460.0" cy="468.5" r="8" fill="var(--d4)"/>
+          <circle cx="499.8" cy="415.8" r="8" fill="var(--d4)"/>
+        </g>
+        <text x="545" y="238" font-size="16" font-weight="700" fill="var(--ink)">✈ DFW 落地</text>
+        <text x="418" y="284" font-size="17" font-weight="700" fill="var(--ink)">沃斯堡 <tspan font-size="13" fill="var(--ink2)">夜1</tspan></text>
+        <text x="560" y="256" font-size="17" font-weight="700" fill="var(--ink)">达拉斯</text>
+        <text x="740" y="493" text-anchor="end" font-size="17" font-weight="700" fill="var(--ink)">NASA·Webster <tspan font-size="13" fill="var(--ink2)">夜2</tspan></text>
+        <text x="380" y="694" font-size="17" font-weight="700" fill="var(--ink)">布朗斯维尔 <tspan font-size="13" fill="var(--ink2)">夜3</tspan></text>
+        <text x="330" y="464" font-size="17" font-weight="700" fill="var(--ink)">圣安东尼奥</text>
+        <text x="510" y="404" font-size="17" font-weight="700" fill="var(--ink)">奥斯汀 <tspan font-size="13" fill="var(--ink2)">夜4 · ✈AUS</tspan></text>
+
+        <!-- 罗盘 -->
+        <g transform="translate(66,62)" stroke="var(--ink3)" fill="var(--ink3)">
+          <line x1="0" y1="22" x2="0" y2="-14" stroke-width="2.5"/>
+          <path d="M0,-22 L7,-8 L-7,-8 Z" stroke="none"/>
+          <text x="-6" y="-30" font-size="16" stroke="none" fill="var(--ink2)">北</text>
+        </g>
+      </svg>
+      <div class="maplegend">
+        <div class="leg"><span class="sw fly"></span><div><b>飞行段</b> · 9/4 ONT→DFW（已订）/ 9/8 AUS→LAX（已订）</div></div>
+        <div class="leg"><span class="sw" style="background:var(--d1)"></span><div><b>D1 · 9/4 周五</b> 落地 → 沃斯堡牛仔小镇 + Rodeo</div><span class="hrs">🚗 ~40min</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d2)"></span><div><b>D2 · 9/5 周六</b> 达拉斯艺术半日 → I-45 南下 → NASA 湾区</div><span class="hrs">🚗 ~4.5h</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d3)"></span><div><b>D3 · 9/6 周日</b> NASA 太空中心 → 直奔德州最南端</div><span class="hrs">🚗 ~5h</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d4)"></span><div><b>D4 · 9/7 周一</b> 星舰基地 → 圣安东尼奥 → 夜抵奥斯汀</div><span class="hrs">🚗 ~6h 累计</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d5)"></span><div><b>D5 · 9/8 周二</b> 清晨还车，7:15 起飞回加州</div><span class="hrs">🚗 20min</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 航班 ============ -->
+  <section id="flights">
+    <h2 class="sec">✈️ 航班（已出票）</h2>
+    <div class="fl-grid">
+      <div class="card fl">
+        <div class="top">🛫 去程 · 9/4 周五 · Frontier F9 4690 <span class="pill">已确认</span></div>
+        <div class="route">ONT <span class="arr">3h 14m 直飞</span> DFW</div>
+        <div class="times"><span><b>08:17</b> 安大略</span><span><b>13:31</b> 达拉斯</span></div>
+        <div class="meta">经济舱 · Priceline 预订 · 确认号见邮件（为隐私不放在本页）</div>
+      </div>
+      <div class="card fl">
+        <div class="top">🛬 回程 · 9/8 周二 · Delta DL306 <span class="pill">已确认</span></div>
+        <div class="route">AUS <span class="arr">3h 13m 直飞</span> LAX</div>
+        <div class="times"><span><b>07:15</b> 奥斯汀</span><span><b>08:28</b> 洛杉矶</span></div>
+        <div class="meta">经济舱 · Priceline 预订 · 落地即接上加州的周二上午</div>
+      </div>
+    </div>
+    <div class="fl-note">⚠️ Frontier 随身行李和托运行李都要单独收费，提前在官网「管理预订」里买最便宜，到柜台买最贵——4 人建议尽量合并行李。</div>
+  </section>
+
+  <!-- ============ 每日行程 ============ -->
+  <section id="days">
+    <h2 class="sec">📅 每日行程</h2>
+    <div class="sec-sub">时间为德州中部时间（比加州快 2 小时）。🎫 = 需要提前订票/预约的项目。</div>
+
+    <div class="card day c1">
+      <div class="day-head">
+        <div class="day-num"><span class="d">9.4</span><span class="w">周五</span></div>
+        <div><div class="day-title">落地即牛仔 —— 沃斯堡 Rodeo 之夜</div>
+        <div class="day-route">ONT ✈ DFW → 沃斯堡 Stockyards · 车程约 40 分钟</div></div>
+      </div>
+      <div class="day-body">
+        <div class="tl"><span class="t">08:17</span><div class="tx">Frontier 4690 从 ONT 起飞<small>提前 2 小时到机场；Frontier 值机柜台关闭较早，别踩点</small></div></div>
+        <div class="tl"><span class="t">13:31</span><div class="tx">抵达 DFW，取行李、机场提车 <span class="tag tk">🚗 待订</span><small>一段式租车：DFW 取 → 9/8 清晨 AUS 还</small></div></div>
+        <div class="tl"><span class="t">15:30</span><div class="tx">抵达沃斯堡 Fort Worth Stockyards，逛复古牛仔小镇<small>Exchange Ave 主街、牛仔名人堂、西部用品店（可以在这买顶牛仔帽进入状态）</small></div></div>
+        <div class="tl"><span class="t">16:00</span><div class="tx">看 Fort Worth Herd 长角牛游行 <span class="tag star">⭐ 免费</span><small>每天 11:30 与 16:00 两场，正好赶上下午场</small></div></div>
+        <div class="tl"><span class="t">18:00</span><div class="tx">Stockyards 晚餐<small>Cooper's Old Time Pit BBQ / Riscky's Barbeque，都在主街上</small></div></div>
+        <div class="tl"><span class="t">19:30</span><div class="tx">Cowtown Coliseum · Stockyards Championship Rodeo <span class="tag tk">🎫 周五场</span><small>血脉喷张的牛仔竞技！开场时间以官网票面为准（约 19:30–20:00）</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜1 · 待定</b> —— 建议沃斯堡 Stockyards 周边或达拉斯方向，Rodeo 散场就近入住（见清单 #5）</div></div>
+      </div>
+    </div>
+
+    <div class="card day c2">
+      <div class="day-head">
+        <div class="day-num"><span class="d">9.5</span><span class="w">周六</span></div>
+        <div><div class="day-title">达拉斯艺术半日 + 从容南下</div>
+        <div class="day-route">沃斯堡 → 达拉斯 → I-45 → Webster（NASA 旁）· 车程约 4.5 小时</div></div>
+      </div>
+      <div class="day-body">
+        <div class="tl"><span class="t">09:30</span><div class="tx">达拉斯市区打卡：Giant Eyeball 巨型眼球 + Dealey Plaza / JFK 纪念地<small>都在市中心，户外免费，一小时内步行搞定</small></div></div>
+        <div class="tl"><span class="t">11:00</span><div class="tx">Dallas Museum of Art 艺术殿堂 <span class="tag star">⭐ 免费</span><small>周六 11:00 开门，精逛 1 小时（周一闭馆，只有今天能看）</small></div></div>
+        <div class="tl"><span class="t">12:30</span><div class="tx">Terry Black's Barbecue（Deep Ellum）顶级德州烤肉<small>不接受预订，排队 30–45 分钟是体验的一部分；必点 Brisket 牛胸肉 + 大牛肋排</small></div></div>
+        <div class="tl"><span class="t">14:00</span><div class="tx">Bishop Arts District 艺术街区顺路漫步<small>德州/墨西哥风情小店，半小时到一小时即可</small></div></div>
+        <div class="tl"><span class="t">15:00</span><div class="tx">上 I-45 南下 —— 白天赶路，不再半夜狂奔</div></div>
+        <div class="tl"><span class="t">17:00</span><div class="tx">Madisonville Buc-ee's 巨型便利店 <span class="tag star">⭐ 必停</span><small>超充/加油 + 招牌 Beaver Nuggets + 现切烤肉三明治 + 全德州最干净的洗手间</small></div></div>
+        <div class="tl"><span class="t">19:15</span><div class="tx">抵达 Webster / Clear Lake（NASA 旁）入住</div></div>
+        <div class="tl"><span class="t">19:45</span><div class="tx">Kemah Boardwalk 海滨木栈道晚餐 + 夜游<small>周六晚游乐场最热闹，摩天轮看海湾夜景；距酒店约 15 分钟</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜2 · 待定</b> —— Webster / Clear Lake 连锁酒店，就在 NASA 旁边，取代原计划的 Huntsville 半夜中转（见清单 #6）</div></div>
+      </div>
+    </div>
+
+    <div class="card day c3">
+      <div class="day-head">
+        <div class="day-num"><span class="d">9.6</span><span class="w">周日</span></div>
+        <div><div class="day-title">航天城 + 南下长征</div>
+        <div class="day-route">NASA → I-69E/US-77 → 布朗斯维尔 · 车程约 5 小时</div></div>
+      </div>
+      <div class="day-body">
+        <div class="tl"><span class="t">09:30</span><div class="tx">Space Center Houston 开门即入场 <span class="tag tk">🎫 ×4</span><small>酒店过去 10 分钟；开门时间以官网为准（约 9:00–10:00），劳工节周末人多，早到</small></div></div>
+        <div class="tl"><span class="t">10:30</span><div class="tx">Tram Tour 电车游览：土星五号火箭 + 阿波罗任务控制中心 <span class="tag tk">🎫 预约槽位</span><small>买票后必须在系统里锁定 10:30/11:00 的槽位，晚了下午就赶不上南下</small></div></div>
+        <div class="tl"><span class="t">13:00</span><div class="tx">Pappadeaux Seafood Kitchen（Webster）美式海鲜午餐 <span class="tag tk">🎫 建议预约</span></div></div>
+        <div class="tl"><span class="t">14:30</span><div class="tx">出发直奔德州最南端<small>I-69E / US-77 一路向南约 5 小时，风景单调，开启辅助驾驶、两人轮换；中途 Kingsville 或 Harlingen 休息补给</small></div></div>
+        <div class="tl"><span class="t">19:30</span><div class="tx">抵达布朗斯维尔入住，早点休息<small>比原计划提前 2 小时到，明天早起看星舰</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜3 · 待定</b> —— 布朗斯维尔市区，去 Starbase 的大本营（见清单 #7）</div></div>
+      </div>
+    </div>
+
+    <div class="card day c4">
+      <div class="day-head">
+        <div class="day-num"><span class="d">9.7</span><span class="w">周一</span></div>
+        <div><div class="day-title">劳工节：星舰基地 + 古城 + 夜抵首府</div>
+        <div class="day-route">Starbase → I-37 → 圣安东尼奥 → I-35 → 奥斯汀 · 车程累计约 6 小时</div></div>
+      </div>
+      <div class="day-body">
+        <div class="tl"><span class="t">07:45</span><div class="tx">出发，沿 TX-4 号公路开到尽头 —— SpaceX Starbase 🚀 <span class="tag star">⭐ 免费</span><small>超近距离看巨型星舰、超重型推进器和 Mechazilla 发射塔；出发前一晚查 Cameron County 封路公告</small></div></div>
+        <div class="tl"><span class="t">10:30</span><div class="tx">告别星舰，上 US-77 → I-37 北上<small>途中过 Border Patrol 内陆检查站，4 人证件随身；Kingsville 一带快速午餐</small></div></div>
+        <div class="tl"><span class="t">15:30</span><div class="tx">Mission San José 圣何塞传道院 <span class="tag star">⭐ 德州传道院之王</span><small>国家历史公园，园区约 17:00 关，先看这里</small></div></div>
+        <div class="tl"><span class="t">16:45</span><div class="tx">The Alamo 阿拉莫 —— 德州精神圣地 <span class="tag tk">🎫 免费但需约</span><small>提前在官网领 timed entry 免费票（约 16:30–17:00 场），教堂 17:30 关门</small></div></div>
+        <div class="tl"><span class="t">18:00</span><div class="tx">River Walk 河畔步道晚餐 <span class="tag tk">🎫 可选预约</span><small>运河边 Tex-Mex + 玛格丽特；想坐 Boudro's 河景露天位就提前订，不挑可 walk-in</small></div></div>
+        <div class="tl"><span class="t">20:00</span><div class="tx">I-35 北上奥斯汀（约 1.5 小时）</div></div>
+        <div class="tl"><span class="t">21:45</span><div class="tx">夜色中的德州议会大厦 <span class="tag star">⭐ 夜景</span><small>粉红花岗岩打灯很好看，广场全天开放，停车拍照 20 分钟；明早赶飞机来不及看，就今晚</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜4 · 待定</b> —— 建议 AUS 机场方向，明早 5 点出门不折腾（见清单 #8）</div></div>
+      </div>
+    </div>
+
+    <div class="card day c5">
+      <div class="day-head">
+        <div class="day-num"><span class="d">9.8</span><span class="w">周二</span></div>
+        <div><div class="day-title">清晨返程</div>
+        <div class="day-route">奥斯汀 ✈ 洛杉矶 · 无缝衔接加州的周二</div></div>
+      </div>
+      <div class="day-body">
+        <div class="tl"><span class="t">04:45</span><div class="tx">起床退房（相当于加州 2:45，前一晚尽量 22:30 前睡）</div></div>
+        <div class="tl"><span class="t">05:15</span><div class="tx">AUS 机场还车<small>订车时确认清晨还车方式（无人 key drop 还是柜台），加满油/充够电</small></div></div>
+        <div class="tl"><span class="t">05:45</span><div class="tx">安检 · 劳工节假期尾巴人多，预留充足时间</div></div>
+        <div class="tl"><span class="t">07:15</span><div class="tx">Delta DL306 起飞 → <b>08:28</b> 抵达 LAX<small>赚回 2 小时时差，落地正好接上加州的周二上午</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 待办清单 ============ -->
+  <section id="todo">
+    <h2 class="sec">✅ 待办清单</h2>
+    <div class="sec-sub">点击勾选，进度保存在本机浏览器。酒店订好发我，我再把具体酒店填回每日行程。</div>
+    <div class="card">
+      <div class="prog"><div class="bar"><i id="progBar"></i></div><span class="n" id="progNum">0/0</span></div>
+
+      <div class="todo-group">
+        <h3>✈️ 已搞定</h3>
+        <div class="todo" data-id="flight-out" data-default="1">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">1. 去程机票 ONT → DFW</div>
+          <div class="det">9/4 周五 08:17–13:31 · Frontier 4690 · 4 人 · Priceline 已确认</div></div>
+        </div>
+        <div class="todo" data-id="flight-back" data-default="1">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">2. 回程机票 AUS → LAX</div>
+          <div class="det">9/8 周二 07:15–08:28 · Delta DL306 · Priceline 已确认</div></div>
+        </div>
+
+        <h3>🚨 极高优先级 —— 越早越好</h3>
+        <div class="todo" data-id="car">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">3. 异地还车租车（One-way）</div>
+          <div class="det">取：9/4 约 14:00 DFW 机场 ｜ 还：9/8 约 05:15 AUS 机场。4 人 + 行李，建议 Tesla Model Y / 中型 SUV，务必带 Autopilot/自适应巡航（长途多）。<b>下单时确认 AUS 支持清晨还车</b>。<a href="https://www.hertz.com" target="_blank" rel="noopener">Hertz</a> · <a href="https://www.avis.com" target="_blank" rel="noopener">Avis</a></div></div>
+        </div>
+        <div class="todo" data-id="rodeo">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">4. Rodeo 门票 ×4（极易售罄）</div>
+          <div class="det">⚠️ 改订 <b>9/4（周五）晚场</b>，不是原计划的周六！Cowtown Coliseum · Stockyards Championship Rodeo。<a href="https://cowtowncoliseum.com/events" target="_blank" rel="noopener">cowtowncoliseum.com/events</a></div></div>
+        </div>
+        <div class="todo" data-id="nasa">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">5. NASA 门票 ×4 + Tram Tour 槽位</div>
+          <div class="det">9/6 周日上午 · Space Center Houston。买完大门票后<b>必须</b>预约土星五号 Tram Tour，选 10:30 或 11:00，否则下午赶不上南下。<a href="https://spacecenter.org/tickets/" target="_blank" rel="noopener">spacecenter.org/tickets</a></div></div>
+        </div>
+        <div class="todo" data-id="alamo">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">6. Alamo 免费 timed entry ×4</div>
+          <div class="det">9/7 周一约 16:30–17:00 场次，免费但要占位（劳工节人多）。<a href="https://www.thealamo.org" target="_blank" rel="noopener">thealamo.org</a></div></div>
+        </div>
+
+        <h3>🏨 酒店 ×4 晚（订好发我，我填回行程）</h3>
+        <div class="todo" data-id="hotel-1">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">7. 夜1 · 9/4 沃斯堡 / 达拉斯</div>
+          <div class="det">优先 Stockyards 周边（Rodeo 散场步行/短驾），其次达拉斯方向（周六早上顺路）。</div></div>
+        </div>
+        <div class="todo" data-id="hotel-2">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">8. 夜2 · 9/5 Webster / Clear Lake（NASA 旁）</div>
+          <div class="det">取代原 Huntsville 半夜中转。选 NASA Pkwy / I-45 出口附近连锁（Hampton Inn、Holiday Inn Express 等），第二天开门即到。</div></div>
+        </div>
+        <div class="todo" data-id="hotel-3">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">9. 夜3 · 9/6 布朗斯维尔</div>
+          <div class="det">市区即可，第二天去 Starbase 的大本营（单程约 35 分钟）。</div></div>
+        </div>
+        <div class="todo" data-id="hotel-4">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">10. 夜4 · 9/7 奥斯汀（偏机场）</div>
+          <div class="det">7:15 早班机 → 建议 AUS 机场附近或市中心东南侧，5 点出门不折腾。</div></div>
+        </div>
+
+        <h3>🍖 中优先级 —— 餐饮与准备</h3>
+        <div class="todo" data-id="pappadeaux">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">11. Pappadeaux 海鲜午餐预约 ×4</div>
+          <div class="det">9/6 周日 13:00 · Webster 店（NASA 旁）。<a href="https://www.opentable.com/pappadeaux-seafood-kitchen-webster" target="_blank" rel="noopener">OpenTable 预约</a></div></div>
+        </div>
+        <div class="todo" data-id="boudros">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">12. River Walk 河景晚餐预约（可选）</div>
+          <div class="det">9/7 周一 18:00 ×4 · Boudro's 露天河景位；不挑位置可当场 walk-in。<a href="https://www.opentable.com/boudros-on-the-riverwalk" target="_blank" rel="noopener">OpenTable 预约</a></div></div>
+        </div>
+        <div class="todo" data-id="frontier-bag">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">13. Frontier 行李额提前购买</div>
+          <div class="det">随身+托运都收费且越晚越贵，在官网「管理预订」提前买；4 人合并行李最省。<a href="https://www.flyfrontier.com" target="_blank" rel="noopener">flyfrontier.com</a></div></div>
+        </div>
+        <div class="todo" data-id="charge">
+          <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
+          <div class="body"><div class="name">14. 充电/加油路线 + Starbase 封路确认</div>
+          <div class="det">若租电车：用 Tesla App / ABRP 规划沿途超充（Madisonville Buc-ee's 有超充；重点确认 Webster→布朗斯维尔→圣安东尼奥段）。出发前查 9/7 TX-4 封路公告：<a href="https://www.cameroncountytx.gov/spacex/" target="_blank" rel="noopener">cameroncountytx.gov/spacex</a></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 贴士 ============ -->
+  <section id="tips">
+    <h2 class="sec">💡 实用贴士</h2>
+    <div class="card tips"><ul>
+      <li><b>时差：</b>德州是中部时间，比加州快 2 小时。9/8 早上 7:15 的航班相当于加州凌晨 5:15 —— 周一晚在奥斯汀务必早睡。</li>
+      <li><b>证件：</b>国内航班需要 REAL ID 合规证件（订票页已提示），出发前确认 4 人证件都没问题；北上 US-77 会经过 Border Patrol 内陆检查站，证件全程随身。</li>
+      <li><b>天气：</b>9 月初德州依然 35°C+ 的酷热，防晒、帽子、大瓶水；Starbase 在海边风大，NASA 和车里冷气很足，备件薄外套。</li>
+      <li><b>排队心理预期：</b>Terry Black's 不可预约，排队 30–45 分钟是德州文化的一部分；劳工节周末 Rodeo / NASA / Alamo 人都多，能提前订的都提前订。</li>
+      <li><b>驾驶：</b>全程约 1,000 英里，D3/D4 是长途日 —— 两人轮换 + 辅助驾驶 + 每 2 小时进休息站；德州乡间公路限速 75 mph 但注意小镇测速。</li>
+      <li><b>Starbase：</b>TX-4 是公共道路，看星舰免费，但火箭移运/测试时会封路 —— 前一晚一定查 Cameron County 公告（清单 #14）。</li>
+    </ul></div>
+  </section>
+
+  <footer>Josie Travel Book · Texas 2026 · 4 人行 · 行程随预订进度更新 · 2026.8.27</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='texasTrip.todos.v1';
+  var saved={};
+  try{ saved=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){}
+  var items=[].slice.call(document.querySelectorAll('.todo'));
+
+  function stateOf(el){
+    var id=el.dataset.id;
+    if(id in saved) return !!saved[id];
+    return el.dataset.default==='1';
+  }
+  function persist(){
+    try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
+  }
+  function refresh(){
+    var done=0, hotels=0;
+    items.forEach(function(el){
+      var on=stateOf(el);
+      el.classList.toggle('done',on);
+      if(on) done++;
+      if(on && el.dataset.id.indexOf('hotel-')===0) hotels++;
+    });
+    var bar=document.getElementById('progBar');
+    if(bar) bar.style.width=(items.length?Math.round(done/items.length*100):0)+'%';
+    var n=document.getElementById('progNum');
+    if(n) n.textContent=done+'/'+items.length;
+    var hc=document.getElementById('hotelChip');
+    if(hc){
+      hc.textContent='🏨 酒店 '+hotels+'/4';
+      hc.className='chip '+(hotels>=4?'ok':'warn');
+    }
+  }
+  items.forEach(function(el){
+    el.querySelector('.box').addEventListener('click',function(){
+      saved[el.dataset.id]=!stateOf(el);
+      persist(); refresh();
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
