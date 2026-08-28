@@ -181,7 +181,7 @@
     <div class="chips">
       <span class="chip ok">✈️ 往返机票已出票</span>
       <span class="chip warn">🚗 租车待订</span>
-      <span class="chip warn" id="hotelChip">🏨 酒店 0/4</span>
+      <span class="chip ok" id="hotelChip">🏨 酒店 0/4</span>
       <span class="chip ok">🤠 Rodeo 已购 M 区</span>
       <span class="chip">🎟️ NASA / Alamo 待购票</span>
     </div>
@@ -221,9 +221,9 @@
         <!-- D1 红：DFW→沃斯堡 -->
         <path d="M536.9,252.7 L521.5,262.0" fill="none" stroke="var(--d1)" stroke-width="5" stroke-linecap="round"/>
         <!-- D2 橙：沃斯堡→达拉斯→I-45→休斯顿 -->
-        <path d="M521.5,262.0 L549.6,260.1 L567.1,302.3 L588.9,342.0 L596.8,373.6 L615.9,388.5 L620.7,413.3 L626.0,447.4" fill="none" stroke="var(--d2)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M521.5,262.0 L549.6,260.1 L567.1,302.3 L588.9,342.0 L596.8,373.6 L615.9,388.5 L620.7,413.3 L626.0,447.4 L638.7,461.0" fill="none" stroke="var(--d2)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
         <!-- D3 蓝：休斯顿→NASA/Kemah→布朗斯维尔 -->
-        <path d="M626.0,447.4 L641.0,461.0 L605.3,475.3 L578.8,491.4 L539.0,506.3 L524.2,537.3 L503.5,569.5 L493.4,586.3 L496.6,619.7 L497.7,650.7 L501.9,668.7 L512.5,686.7" fill="none" stroke="var(--d3)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M638.7,461.0 L644.0,461.0 L605.3,475.3 L578.8,491.4 L539.0,506.3 L524.2,537.3 L503.5,569.5 L493.4,586.3 L496.6,619.7 L497.7,650.7 L501.9,668.7 L512.5,686.7" fill="none" stroke="var(--d3)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
         <!-- D4 绿：布朗斯维尔→Starbase + 北上圣安东尼奥→奥斯汀（共线段稍向西偏移） -->
         <path d="M512.5,686.7 L530.5,681.1" fill="none" stroke="var(--d4)" stroke-width="4.5" stroke-linecap="round"/>
         <path d="M507.5,684.7 L496.9,668.7 L492.7,650.7 L488.4,586.3 L498.5,569.5 L479.6,536.0 L460.5,496.4 L460.0,468.5 L479.6,451.1 L489.2,439.9 L499.8,415.8" fill="none" stroke="var(--d4)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -231,11 +231,13 @@
         <!-- 途经点（小空心点） -->
         <g fill="var(--panel)" stroke="var(--ink3)" stroke-width="2.5">
           <circle cx="596.8" cy="373.6" r="5"/>
-          <circle cx="641.0" cy="461.0" r="5"/>
+          <circle cx="626.0" cy="447.4" r="5"/>
+          <circle cx="644.0" cy="461.0" r="5"/>
           <circle cx="530.5" cy="681.1" r="5.5"/>
         </g>
         <text x="608" y="368" font-size="15" fill="var(--ink2)">Buc-ee's 🦫</text>
-                <text x="740" y="479" text-anchor="end" font-size="15" fill="var(--ink2)">NASA · Kemah</text>
+                <text x="740" y="478" text-anchor="end" font-size="17" font-weight="700" fill="var(--ink)">NASA·Clear Lake <tspan font-size="13" fill="var(--ink2)">夜2</tspan></text>
+        <text x="740" y="497" text-anchor="end" font-size="15" fill="var(--ink2)">Kemah</text>
         <text x="543" y="700" font-size="15" fill="var(--ink2)">🚀 SpaceX Starbase</text>
 
         <!-- 过夜城市（实心大点 + 夜次） -->
@@ -243,7 +245,7 @@
           <circle cx="536.9" cy="252.7" r="7" fill="var(--d1)"/>
           <circle cx="521.5" cy="262.0" r="8" fill="var(--d1)"/>
           <circle cx="549.6" cy="260.1" r="7" fill="var(--d2)"/>
-          <circle cx="626.0" cy="447.4" r="8" fill="var(--d2)"/>
+          <circle cx="638.7" cy="461.0" r="8" fill="var(--d2)"/>
           <circle cx="512.5" cy="686.7" r="8" fill="var(--d3)"/>
           <circle cx="460.0" cy="468.5" r="8" fill="var(--d4)"/>
           <circle cx="499.8" cy="415.8" r="8" fill="var(--d4)"/>
@@ -251,7 +253,7 @@
         <text x="545" y="238" font-size="16" font-weight="700" fill="var(--ink)">✈ DFW 落地</text>
         <text x="418" y="284" font-size="17" font-weight="700" fill="var(--ink)">沃斯堡 <tspan font-size="13" fill="var(--ink2)">夜1</tspan></text>
         <text x="560" y="256" font-size="17" font-weight="700" fill="var(--ink)">达拉斯</text>
-        <text x="616" y="443" text-anchor="end" font-size="17" font-weight="700" fill="var(--ink)">休斯顿 <tspan font-size="13" fill="var(--ink2)">夜2</tspan></text>
+        <text x="616" y="443" text-anchor="end" font-size="15" fill="var(--ink2)">休斯顿</text>
         <text x="380" y="694" font-size="17" font-weight="700" fill="var(--ink)">布朗斯维尔 <tspan font-size="13" fill="var(--ink2)">夜3</tspan></text>
         <text x="330" y="464" font-size="17" font-weight="700" fill="var(--ink)">圣安东尼奥</text>
         <text x="510" y="404" font-size="17" font-weight="700" fill="var(--ink)">奥斯汀 <tspan font-size="13" fill="var(--ink2)">夜4 · ✈AUS</tspan></text>
@@ -266,7 +268,7 @@
       <div class="maplegend">
         <div class="leg"><span class="sw fly"></span><div><b>飞行段</b> · 9/4 ONT→DFW（已订）/ 9/8 AUS→LAX（已订）</div></div>
         <div class="leg"><span class="sw" style="background:var(--d1)"></span><div><b>D1 · 9/4 周五</b> 落地 → 沃斯堡长角牛 + Rodeo 🤠</div><span class="hrs">🚗 ~40min</span></div>
-        <div class="leg"><span class="sw" style="background:var(--d2)"></span><div><b>D2 · 9/5 周六</b> 达拉斯艺术半日 → I-45 南下 → 休斯顿</div><span class="hrs">🚗 ~4.5h</span></div>
+        <div class="leg"><span class="sw" style="background:var(--d2)"></span><div><b>D2 · 9/5 周六</b> 达拉斯艺术半日 → I-45 南下 → NASA 湾区</div><span class="hrs">🚗 ~4.5h</span></div>
         <div class="leg"><span class="sw" style="background:var(--d3)"></span><div><b>D3 · 9/6 周日</b> NASA + Kemah → 直奔德州最南端</div><span class="hrs">🚗 ~6.5h</span></div>
         <div class="leg"><span class="sw" style="background:var(--d4)"></span><div><b>D4 · 9/7 周一</b> 星舰基地 → 圣安东尼奥 → 夜抵奥斯汀</div><span class="hrs">🚗 ~6h 累计</span></div>
         <div class="leg"><span class="sw" style="background:var(--d5)"></span><div><b>D5 · 9/8 周二</b> 清晨还车，7:15 起飞回加州</div><span class="hrs">🚗 20min</span></div>
@@ -322,7 +324,8 @@
         <div class="tl"><span class="t">19:00</span><div class="tx">入场 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Cowtown%20Coliseum%2C%20Fort%20Worth%2C%20TX" target="_blank" rel="noopener">Cowtown Coliseum</a><small>1908 年建成，世界第一座室内竞技场；提前 30 分钟到，老场馆入场慢</small></div></div>
         <div class="tl"><span class="t">19:30</span><div class="tx">Stockyards Championship Rodeo 🤠 <span class="tag star">⭐ 已购 · M 区 5 排 ×4</span><small>完整 7–8 个项目约 2 小时：骑公牛、无鞍/有鞍野马、套小牛、双人套牛、绕桶赛。M 区斜对出闸口，能看到闸门打开与公牛冲出的全程。AXS 电子票，二维码每 60 秒刷新，截图无效，进场前把 App 打开</small></div></div>
         <div class="tl"><span class="t">21:30</span><div class="tx">散场步行 5 分钟去 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Billy%20Bob%27s%20Texas%2C%20Fort%20Worth%2C%20TX" target="_blank" rel="noopener">Billy Bob's Texas</a> 续摊<small>世界最大乡村音乐夜店，21:30 还有一场馆内职业骑公牛；现场买票约 $10，不用提前订</small></div></div>
-        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜1 · 待定</b> —— 沃斯堡 Stockyards 周边或达拉斯方向，散场就近入住（见清单 #5）</div></div>
+        <div class="tl"><span class="t">23:00</span><div class="tx">开回 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Sheraton%20Fort%20Worth%20Downtown%20Hotel" target="_blank" rel="noopener">Sheraton Fort Worth Downtown</a>（约 10 分钟）<small>⚠️ 在 Billy Bob's 喝了酒就叫 Uber，别开车</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜1 · Sheraton Fort Worth Downtown</b> —— 人均 $100 · 距 Stockyards 10 分钟，明早去达拉斯顺路</div></div>
       </div>
     </div>
 
@@ -330,13 +333,13 @@
       <div class="day-head">
         <div class="day-num"><span class="d">9.5</span><span class="w">周六</span></div>
         <div><div class="day-title">艺术地标与直奔休斯顿</div>
-        <div class="day-route">达拉斯 → I-45 南下 → 休斯顿市区 · 车程约 4.5 小时</div></div>
+        <div class="day-route">达拉斯 → I-45 南下 → NASA/Clear Lake · 车程约 4.5 小时</div></div>
       </div>
       <div class="daymap">
         <div class="daymap-bar">
-          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Fort%20Worth%20Stockyards%2C%20Fort%20Worth%2C%20TX&daddr=Dallas%20Museum%20of%20Art%20to%3ABishop%20Arts%20District%2C%20Dallas%2C%20TX%20to%3ATerry%20Black%27s%20Barbecue%2C%20Deep%20Ellum%2C%20Dallas%2C%20TX%20to%3ABuc-ee%27s%2C%20Madisonville%2C%20TX%20to%3ADowntown%20Houston%2C%20TX&output=embed">🗺️ 展开今日路线地图</button>
-          <span class="dm-note">达拉斯 → I-45 南下 → 休斯顿 · 约 4.5 小时</span>
-          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Fort%20Worth%20Stockyards%2C%20Fort%20Worth%2C%20TX&destination=Downtown%20Houston%2C%20TX&travelmode=driving&waypoints=Dallas%20Museum%20of%20Art%7CBishop%20Arts%20District%2C%20Dallas%2C%20TX%7CTerry%20Black%27s%20Barbecue%2C%20Deep%20Ellum%2C%20Dallas%2C%20TX%7CBuc-ee%27s%2C%20Madisonville%2C%20TX" target="_blank" rel="noopener">Google 导航 ↗</a>
+          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Sheraton%20Fort%20Worth%20Downtown%20Hotel&daddr=Dallas%20Museum%20of%20Art%20to%3ABishop%20Arts%20District%2C%20Dallas%2C%20TX%20to%3ATerry%20Black%27s%20Barbecue%2C%20Deep%20Ellum%2C%20Dallas%2C%20TX%20to%3ABuc-ee%27s%2C%20Madisonville%2C%20TX%20to%3AHoliday%20Inn%20Houston%20NASA%20Clear%20Lake%2C%20Webster%2C%20TX&output=embed">🗺️ 展开今日路线地图</button>
+          <span class="dm-note">达拉斯 → I-45 南下 → NASA 湾区 · 约 4.5 小时</span>
+          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Sheraton%20Fort%20Worth%20Downtown%20Hotel&destination=Holiday%20Inn%20Houston%20NASA%20Clear%20Lake%2C%20Webster%2C%20TX&travelmode=driving&waypoints=Dallas%20Museum%20of%20Art%7CBishop%20Arts%20District%2C%20Dallas%2C%20TX%7CTerry%20Black%27s%20Barbecue%2C%20Deep%20Ellum%2C%20Dallas%2C%20TX%7CBuc-ee%27s%2C%20Madisonville%2C%20TX" target="_blank" rel="noopener">Google 导航 ↗</a>
         </div>
         <div class="dm-frame"></div>
       </div>
@@ -347,8 +350,8 @@
         <div class="tl"><span class="t">13:15</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Terry%20Black%27s%20Barbecue%2C%20Deep%20Ellum%2C%20Dallas%2C%20TX" target="_blank" rel="noopener">Terry Black's Barbecue</a>（Deep Ellum）顶级德州烤肉<small>不接受预订，排队 30–45 分钟是体验的一部分；必点 Brisket 牛胸肉 + 大牛肋排。吃完就在旁边上 I-45</small></div></div>
         <div class="tl"><span class="t">15:00</span><div class="tx">上 I-45 南下 —— 开启辅助驾驶，两人轮换</div></div>
         <div class="tl"><span class="t">17:00</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Buc-ee%27s%2C%20Madisonville%2C%20TX" target="_blank" rel="noopener">Madisonville Buc-ee's</a> 巨型便利店 <span class="tag star">⭐ 必停</span><small>超充/加油 + 招牌 Beaver Nuggets + 现切烤肉三明治 + 全德州最干净的洗手间</small></div></div>
-        <div class="tl"><span class="t">19:15</span><div class="tx">抵达 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Downtown%20Houston%2C%20TX" target="_blank" rel="noopener">休斯顿市区</a> 入住<small>比原方案多开 40 分钟，但市区餐饮选择多，周六晚可以好好吃一顿休整</small></div></div>
-        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜2 · 待定</b> —— 休斯顿市区。明早去 NASA 约 40 分钟，建议订市区东南侧省时间（见清单 #6）</div></div>
+        <div class="tl"><span class="t">19:30</span><div class="tx">抵达 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Holiday%20Inn%20Houston%20NASA%20Clear%20Lake%2C%20Webster%2C%20TX" target="_blank" rel="noopener">Holiday Inn（NASA/Clear Lake）</a> 入住<small>就在 NASA 旁边，明早开门即到；Kemah Boardwalk 距此仅 15 分钟，今晚有精力可以先去逛</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜2 · Holiday Inn（NASA/Clear Lake）</b> —— 人均 $80 · 紧邻 Space Center Houston，明早 10 分钟到</div></div>
       </div>
     </div>
 
@@ -356,25 +359,24 @@
       <div class="day-head">
         <div class="day-num"><span class="d">9.6</span><span class="w">周日</span></div>
         <div><div class="day-title">航天城与沿岸狂飙（魔鬼长途日）</div>
-        <div class="day-route">休斯顿 → NASA → Kemah → I-69E 南下布朗斯维尔 · 车程约 6.5 小时</div></div>
+        <div class="day-route">NASA → Kemah → I-69E 南下布朗斯维尔 · 车程约 6 小时</div></div>
       </div>
       <div class="daymap">
         <div class="daymap-bar">
-          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Downtown%20Houston%2C%20TX&daddr=Space%20Center%20Houston%20to%3APappadeaux%20Seafood%20Kitchen%2C%20Webster%2C%20TX%20to%3AKemah%20Boardwalk%2C%20Kemah%2C%20TX%20to%3ABrownsville%2C%20TX&output=embed">🗺️ 展开今日路线地图</button>
-          <span class="dm-note">休斯顿 → NASA → 布朗斯维尔 · 约 6.5 小时</span>
-          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Downtown%20Houston%2C%20TX&destination=Brownsville%2C%20TX&travelmode=driving&waypoints=Space%20Center%20Houston%7CPappadeaux%20Seafood%20Kitchen%2C%20Webster%2C%20TX%7CKemah%20Boardwalk%2C%20Kemah%2C%20TX" target="_blank" rel="noopener">Google 导航 ↗</a>
+          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Holiday%20Inn%20Houston%20NASA%20Clear%20Lake%2C%20Webster%2C%20TX&daddr=Space%20Center%20Houston%20to%3APappadeaux%20Seafood%20Kitchen%2C%20Webster%2C%20TX%20to%3AKemah%20Boardwalk%2C%20Kemah%2C%20TX%20to%3ABrownsville%2C%20TX&output=embed">🗺️ 展开今日路线地图</button>
+          <span class="dm-note">NASA → Kemah → 布朗斯维尔 · 约 6 小时</span>
+          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Holiday%20Inn%20Houston%20NASA%20Clear%20Lake%2C%20Webster%2C%20TX&destination=Brownsville%2C%20TX&travelmode=driving&waypoints=Space%20Center%20Houston%7CPappadeaux%20Seafood%20Kitchen%2C%20Webster%2C%20TX%7CKemah%20Boardwalk%2C%20Kemah%2C%20TX" target="_blank" rel="noopener">Google 导航 ↗</a>
         </div>
         <div class="dm-frame"></div>
       </div>
       <div class="day-body">
-        <div class="tl"><span class="t">08:30</span><div class="tx">从休斯顿市区出发去 NASA（约 40 分钟）</div></div>
-        <div class="tl"><span class="t">09:30</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Space%20Center%20Houston" target="_blank" rel="noopener">Space Center Houston</a> 开门即入场 <span class="tag tk">🎫 ×4</span><small>开门时间以官网为准（约 9:00–10:00），劳工节周末人多，早到</small></div></div>
+        <div class="tl"><span class="t">09:15</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Space%20Center%20Houston" target="_blank" rel="noopener">Space Center Houston</a> 开门即入场 <span class="tag tk">🎫 ×4</span><small>酒店过去只要 10 分钟；劳工节周末人多，开门即入省排队</small></div></div>
         <div class="tl"><span class="t">10:30</span><div class="tx">Tram Tour 电车游览：土星五号火箭 + 阿波罗任务控制中心 <span class="tag tk">🎫 预约槽位</span><small>买票后必须在系统里锁定 10:30/11:00 的槽位，晚了下午就赶不上南下</small></div></div>
         <div class="tl"><span class="t">13:00</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Pappadeaux%20Seafood%20Kitchen%2C%20Webster%2C%20TX" target="_blank" rel="noopener">Pappadeaux Seafood Kitchen</a>（Webster）美式海鲜午餐 <span class="tag tk">🎫 建议预约</span></div></div>
         <div class="tl"><span class="t">14:15</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Kemah%20Boardwalk%2C%20Kemah%2C%20TX" target="_blank" rel="noopener">Kemah Boardwalk</a> 海滨木栈道散步消食<small>车程 15 分钟，逛 1 小时；风景极佳，适合拍照</small></div></div>
         <div class="tl"><span class="t">15:15</span><div class="tx">【硬核挑战】沿 I-69E / US-77 直奔德州最南端 <span class="tag tk">⚠️ 约 6 小时</span><small>沿途风景单调，极度考验耐力，务必开启辅助驾驶并轮换休息；Kingsville 或 Harlingen 中途补给</small></div></div>
         <div class="tl"><span class="t">21:15</span><div class="tx">抵达 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Brownsville%2C%20TX" target="_blank" rel="noopener">布朗斯维尔</a> 入住，尽快休息<small>今天是全程最长的一天，明早还要早起看星舰</small></div></div>
-        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜3 · 待定</b> —— 布朗斯维尔市区，去 Starbase 的大本营（见清单 #7）</div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜3 · Airbnb（布朗斯维尔）</b> —— 人均 $50 · 21:15 抵达，务必确认支持自助入住（密码锁 / lockbox）</div></div>
       </div>
     </div>
 
@@ -399,8 +401,9 @@
         <div class="tl"><span class="t">16:45</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=The%20Alamo%2C%20San%20Antonio%2C%20TX" target="_blank" rel="noopener">The Alamo</a> 阿拉莫 —— 德州精神圣地 <span class="tag tk">🎫 免费但需约</span><small>提前在官网领 timed entry 免费票（约 16:30–17:00 场），教堂 17:30 关门</small></div></div>
         <div class="tl"><span class="t">18:00</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=San%20Antonio%20River%20Walk" target="_blank" rel="noopener">River Walk</a> 河畔步道晚餐 <span class="tag tk">🎫 可选预约</span><small>运河边 Tex-Mex + 玛格丽特；想坐 Boudro's 河景露天位就提前订，不挑可 walk-in</small></div></div>
         <div class="tl"><span class="t">20:00</span><div class="tx">I-35 北上奥斯汀（约 1.5 小时）</div></div>
-        <div class="tl"><span class="t">21:30</span><div class="tx">夜色中的 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Texas%20State%20Capitol%2C%20Austin%2C%20TX" target="_blank" rel="noopener">德州议会大厦</a> <span class="tag star">⭐ 夜景</span><small>粉红花岗岩打灯很好看，广场全天开放，停车拍照 20 分钟。<b>明早 4:45 就要起床赶飞机，早上看不了，所以安排在今晚</b>——酒店订市中心的话就在旁边，完全顺路</small></div></div>
-        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜4 · 待定</b> —— 奥斯汀市中心，看完议会大厦步行可回；明早去 AUS 约 20 分钟（见清单 #8）</div></div>
+        <div class="tl"><span class="t">21:30</span><div class="tx">夜色中的 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Texas%20State%20Capitol%2C%20Austin%2C%20TX" target="_blank" rel="noopener">德州议会大厦</a> <span class="tag star">⭐ 夜景</span><small>粉红花岗岩打灯很好看，广场全天开放，停车拍照 20 分钟。<b>明早 5 点就要起床赶飞机，早上看不了，所以安排在今晚</b>——从 I-35 进城正好路过，看完再开去机场酒店</small></div></div>
+        <div class="tl"><span class="t">22:00</span><div class="tx">开往 <a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best%20Western%20Plus%20Austin%20Airport%20Inn%20and%20Suites" target="_blank" rel="noopener">Best Western Plus Austin Airport</a> 入住（约 20 分钟）<small>议会大厦在进城路上顺路看完再来，别先入住再折返</small></div></div>
+        <div class="tl hotel"><span class="t">🏨</span><div class="tx"><b>夜4 · Best Western Plus Austin Airport Inn &amp; Suites</b> —— 人均 $50 · 距 AUS 约 5 分钟，早班机最省心</div></div>
       </div>
     </div>
 
@@ -412,14 +415,14 @@
       </div>
       <div class="daymap">
         <div class="daymap-bar">
-          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Downtown%20Austin%2C%20TX&daddr=Austin-Bergstrom%20International%20Airport&output=embed">🗺️ 展开今日路线地图</button>
-          <span class="dm-note">市区 → AUS 机场 · 约 20 分钟</span>
-          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Downtown%20Austin%2C%20TX&destination=Austin-Bergstrom%20International%20Airport&travelmode=driving" target="_blank" rel="noopener">Google 导航 ↗</a>
+          <button class="dm-toggle" type="button" data-src="https://maps.google.com/maps?saddr=Best%20Western%20Plus%20Austin%20Airport%20Inn%20and%20Suites&daddr=Austin-Bergstrom%20International%20Airport&output=embed">🗺️ 展开今日路线地图</button>
+          <span class="dm-note">酒店 → AUS 机场 · 约 5 分钟</span>
+          <a class="dm-go" href="https://www.google.com/maps/dir/?api=1&origin=Best%20Western%20Plus%20Austin%20Airport%20Inn%20and%20Suites&destination=Austin-Bergstrom%20International%20Airport&travelmode=driving" target="_blank" rel="noopener">Google 导航 ↗</a>
         </div>
         <div class="dm-frame"></div>
       </div>
       <div class="day-body">
-        <div class="tl"><span class="t">04:45</span><div class="tx">起床退房（相当于加州 2:45，前一晚尽量 22:30 前睡）</div></div>
+        <div class="tl"><span class="t">05:00</span><div class="tx">起床退房（相当于加州 3:00；酒店就在机场旁，比住市中心多睡 15 分钟）</div></div>
         <div class="tl"><span class="t">05:15</span><div class="tx"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Austin-Bergstrom%20International%20Airport" target="_blank" rel="noopener">AUS 机场</a> 还车<small>订车时确认清晨还车方式（无人 key drop 还是柜台），加满油/充够电</small></div></div>
         <div class="tl"><span class="t">05:45</span><div class="tx">安检 · 劳工节假期尾巴人多，预留充足时间</div></div>
         <div class="tl"><span class="t">07:15</span><div class="tx">Delta DL306 起飞 → <b>08:28</b> 抵达 LAX<small>赚回 2 小时时差，落地正好接上加州的周二上午</small></div></div>
@@ -470,25 +473,25 @@
         </div>
 
         <h3>🏨 酒店 ×4 晚（订好发我，我填回行程）</h3>
-        <div class="todo" data-id="hotel-1">
+        <div class="todo" data-id="hotel-1" data-default="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">7. 夜1 · 9/4 沃斯堡 / 达拉斯</div>
-          <div class="det">优先 Stockyards 周边（Rodeo 散场步行/短驾），其次达拉斯方向（周六早上顺路）。</div></div>
+          <div class="body"><div class="name">7. 夜1 · 9/4 Sheraton Fort Worth Downtown ✓</div>
+          <div class="det">人均 $100 · 沃斯堡市中心，距 Stockyards 约 10 分钟车程，明早去达拉斯顺 I-30 东行。<b>Billy Bob's 喝酒后叫 Uber 回。</b></div></div>
         </div>
-        <div class="todo" data-id="hotel-2">
+        <div class="todo" data-id="hotel-2" data-default="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">8. 夜2 · 9/5 休斯顿市区</div>
-          <div class="det">周六晚在市区吃住选择多。第二天去 NASA 约 40 分钟，<b>建议订市区东南侧（I-45 South 沿线）</b>，早上少堵一点。</div></div>
+          <div class="body"><div class="name">8. 夜2 · 9/5 Holiday Inn（NASA/Clear Lake）✓</div>
+          <div class="det">人均 $80 · 紧邻 Space Center Houston，周日开门即到，比住市区省 40 分钟。Kemah Boardwalk 距此 15 分钟。</div></div>
         </div>
-        <div class="todo" data-id="hotel-3">
+        <div class="todo" data-id="hotel-3" data-default="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">9. 夜3 · 9/6 布朗斯维尔</div>
-          <div class="det">市区即可，第二天去 Starbase 的大本营（单程约 35 分钟）。</div></div>
+          <div class="body"><div class="name">9. 夜3 · 9/6 Airbnb（布朗斯维尔）✓</div>
+          <div class="det">人均 $50 · <b>21:15 才到，务必确认支持自助入住</b>（密码锁 / lockbox），并提前拿到门锁密码；次日 7:45 出发，早餐自备。</div></div>
         </div>
-        <div class="todo" data-id="hotel-4">
+        <div class="todo" data-id="hotel-4" data-default="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">10. 夜4 · 9/7 奥斯汀市中心</div>
-          <div class="det">当晚 21:30 看议会大厦夜景，住市中心走几步就到。次日 5 点出发去 AUS 约 20 分钟，来得及。</div></div>
+          <div class="body"><div class="name">10. 夜4 · 9/7 Best Western Plus Austin Airport ✓</div>
+          <div class="det">人均 $50 · 距 AUS 约 5 分钟，7:15 早班机最省心。议会大厦在进城路上先看完（21:30），再开 20 分钟来入住。</div></div>
         </div>
 
         <h3>🍖 中优先级 —— 餐饮与准备</h3>
@@ -558,8 +561,8 @@
     {t:'2026-09-05T11:00:00-05:00', title:'达拉斯艺术博物馆',            meta:'免费 · 周一闭馆，只有今天能看'},
     {t:'2026-09-05T13:15:00-05:00', title:"Terry Black's 德州烤肉",     meta:'不可预约 · 排队 30–45 分钟 · 必点 Brisket'},
     {t:'2026-09-05T17:00:00-05:00', title:"Buc-ee's 巨型便利店",        meta:'Madisonville · 补能 + Beaver Nuggets'},
-    {t:'2026-09-05T19:15:00-05:00', title:'抵达休斯顿市区',              meta:'入住休整，晚上市区觅食'},
-    {t:'2026-09-06T09:30:00-05:00', title:'NASA 约翰逊太空中心',        meta:'开门即入场 · 劳工节周末人多'},
+    {t:'2026-09-05T19:30:00-05:00', title:'入住 Holiday Inn NASA',      meta:'紧邻太空中心 · Kemah 距此 15 分钟'},
+    {t:'2026-09-06T09:15:00-05:00', title:'NASA 约翰逊太空中心',        meta:'酒店 10 分钟车程 · 开门即入省排队'},
     {t:'2026-09-06T10:30:00-05:00', title:'Tram Tour 电车游览',         meta:'土星五号 + 阿波罗控制中心 · 需预约槽位'},
     {t:'2026-09-06T14:15:00-05:00', title:'Kemah Boardwalk',           meta:'海滨木栈道散步消食 · 逛 1 小时'},
     {t:'2026-09-06T15:15:00-05:00', title:'南下布朗斯维尔',             meta:'I-69E / US-77 · 约 6 小时 · 轮换驾驶'},
@@ -568,7 +571,7 @@
     {t:'2026-09-07T16:45:00-05:00', title:'The Alamo 阿拉莫',           meta:'免费但需预约 timed entry · 17:30 关门'},
     {t:'2026-09-07T18:00:00-05:00', title:'River Walk 河畔晚餐',        meta:'Tex-Mex + 玛格丽特'},
     {t:'2026-09-07T21:30:00-05:00', title:'德州议会大厦夜景',            meta:'粉红花岗岩打灯 · 广场全天开放'},
-    {t:'2026-09-08T05:15:00-05:00', title:'AUS 机场还车',              meta:'04:45 起床退房 · 加满油/充够电'},
+    {t:'2026-09-08T05:15:00-05:00', title:'AUS 机场还车',              meta:'05:00 起床退房 · 酒店距机场 5 分钟'},
     {t:'2026-09-08T07:15:00-05:00', title:'AUS ✈ LAX 起飞回加州',      meta:'Delta DL306 · 08:28 落地，接上周二上午'}
   ];
   var TRIP_END=new Date('2026-09-08T08:28:00-07:00').getTime();
