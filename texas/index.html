@@ -163,6 +163,11 @@
   .todo.done .name{color:var(--ink3); text-decoration:line-through;}
   .todo .det{font-size:13px; color:var(--ink2); margin-top:2px;}
   .todo.done .det{color:var(--ink3);}
+  .todo.locked{background:var(--d4bg);}
+  .todo.locked:hover{background:var(--d4bg);}
+  .todo.locked .box{cursor:default; background:var(--done); border-color:var(--done);}
+  .todo.locked .name::after{content:"已同步"; display:inline-block; white-space:nowrap; margin-left:7px; font-size:10.5px; font-weight:700; letter-spacing:.04em; color:var(--done); background:var(--panel); border-radius:8px; padding:1px 7px; vertical-align:1px;}
+  .todo.locked .name{text-decoration:none; color:var(--ink2);}
   .todo .det a{word-break:break-all;}
 
   /* ---- tips ---- */
@@ -438,37 +443,37 @@
   <!-- ============ 待办清单 ============ -->
   <section id="todo">
     <h2 class="sec">✅ 待办清单</h2>
-    <div class="sec-sub">点击勾选，进度保存在本机浏览器。酒店订好发我，我再把具体酒店填回每日行程。</div>
+    <div class="sec-sub"><b>已订的事写死在页面里</b>，换手机、换电脑、发给同行的人看到的都一样。剩下未完成的项点击勾选，那部分只存在你当前这台设备。<br><span style="color:var(--ink3)">最后同步：2026-08-31</span></div>
     <div class="card">
       <div class="prog"><div class="bar"><i id="progBar"></i></div><span class="n" id="progNum">0/0</span></div>
 
       <div class="todo-group">
         <h3>✈️ 已搞定</h3>
-        <div class="todo" data-id="flight-out" data-default="1">
+        <div class="todo" data-id="flight-out" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
           <div class="body"><div class="name">1. 去程机票 ONT → DFW</div>
           <div class="det">9/4 周五 08:17–13:31 · Frontier 4690 · 4 人 · Priceline 已确认</div></div>
         </div>
-        <div class="todo" data-id="flight-back" data-default="1">
+        <div class="todo" data-id="flight-back" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
           <div class="body"><div class="name">2. 回程机票 AUS → LAX</div>
           <div class="det">9/8 周二 07:15–08:28 · Delta DL306 · Priceline 已确认</div></div>
         </div>
 
         <h3>🚨 极高优先级 —— 越早越好</h3>
-        <div class="todo" data-id="car" data-default="1">
+        <div class="todo" data-id="car" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">3. 异地还车租车 —— 已订 ✓</div>
+          <div class="body"><div class="name">3. 异地还车租车（DFW 取 · AUS 还）</div>
           <div class="det">Alamo <b>Intermediate SUV</b>（Costco Travel）· 9/4 13:30 DFW 取 → 9/8 05:30 AUS 还 · 共 $379.53（人均 $95）。<br>⚠️ <b>AUS 是 after-hours 还车</b>（柜台 01:00–06:30 关）：前一晚加满油，还车时拍全车视频 + 里程油表照片存证，钥匙投 key drop box。<br>🧳 中型 SUV 装 4 人 + 4 个行李箱偏紧，大箱子考虑托运时就精简，或到店问问能不能免费升级。<br>🛣️ 长途日务必两人轮换 + 开自适应巡航。</div></div>
         </div>
-        <div class="todo" data-id="rodeo" data-default="1">
+        <div class="todo" data-id="rodeo" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">4. Rodeo 门票 ×4 —— 已购 ✓</div>
+          <div class="body"><div class="name">4. Rodeo 门票 ×4 · M 区 5 排</div>
           <div class="det">9/4 周五 19:30 · Cowtown Coliseum · <b>M 区 5 排</b>（斜对出闸口）· AXS 电子票。二维码每 60 秒刷新、截图无效，<b>进场前先在手机上打开 AXS App</b>，四张票可用 Transfer 分给同行的人。散场后 Billy Bob's 现场买票续摊即可（约 $10，无需预订）</div></div>
         </div>
-        <div class="todo" data-id="nasa" data-default="1">
+        <div class="todo" data-id="nasa" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">5. NASA 门票 ×4（含任务控制中心）—— 已订 ✓</div>
+          <div class="body"><div class="name">5. NASA 门票 ×4（含任务控制中心）</div>
           <div class="det">9/6 周日 · <b>Adult with Mission Control Tour</b> 套餐 ×4 · 共 $224.80（人均 $56.20，含 $5 手续费）。<br>入场 <b>09:00</b> 时段票 · Apollo Mission Control 电车 <b>12:40</b> 场（12:00 场已售罄，由票代改订）。<b>12:30 到登车区集合，电车不等人</b>；大门票是时段票、迟到可进。<br>土星五号 Rocket Park 电车含在门票内但<b>不可预约</b> —— 09:15 一开门就去电车登车区排队。<br><a href="https://tickets.spacecenter.org/webstore/shop/viewItems.aspx?cg=admissioncg&c=admissionc" target="_blank" rel="noopener">购票入口</a> · <a href="https://spacecenter.org/exhibits-and-experiences/nasa-tram-tour/" target="_blank" rel="noopener">电车路线说明</a></div></div>
         </div>
         <div class="todo" data-id="alamo">
@@ -478,24 +483,24 @@
         </div>
 
         <h3>🏨 酒店 ×4 晚（订好发我，我填回行程）</h3>
-        <div class="todo" data-id="hotel-1" data-default="1">
+        <div class="todo" data-id="hotel-1" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">7. 夜1 · 9/4 Sheraton Fort Worth Downtown ✓</div>
+          <div class="body"><div class="name">7. 夜1 · 9/4 Sheraton Fort Worth Downtown</div>
           <div class="det">1701 Commerce St（Sundance Square）· 人均 $100 · 入住 9/4 → 退房 9/5 · ☎ 817-335-7000。距 Stockyards 约 10 分钟车程，明早去达拉斯顺 I-30 东行。<b>Billy Bob's 喝酒后叫 Uber 回。</b></div></div>
         </div>
-        <div class="todo" data-id="hotel-2" data-default="1">
+        <div class="todo" data-id="hotel-2" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">8. 夜2 · 9/5 Holiday Inn（NASA/Clear Lake）✓</div>
+          <div class="body"><div class="name">8. 夜2 · 9/5 Holiday Inn Express（NASA/Clear Lake）</div>
           <div class="det">900 Rogers Court, Webster · 2 间房 4 人 · 人均 $83 · 入住 9/5 15:00 起 → 退房 9/6 11:00 前 · ☎ 281-316-9750。紧邻 Space Center Houston，<b>周六到店后先去 Kemah 夜游</b>（15 分钟车程），周日省出 1 小时。</div></div>
         </div>
-        <div class="todo" data-id="hotel-3" data-default="1">
+        <div class="todo" data-id="hotel-3" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">9. 夜3 · 9/6 Airbnb（布朗斯维尔）✓</div>
+          <div class="body"><div class="name">9. 夜3 · 9/6 Airbnb（布朗斯维尔）</div>
           <div class="det">Cozy Apartment · Boca Chica Blvd · 人均 $50 · 入住 9/6 15:00 起 → 退房 9/7 11:00 前。<b>20:10 到，务必确认支持自助入住</b>（密码锁 / lockbox）并提前拿到密码；次日 7:45 出发，早餐自备。位置正好在去 Starbase 的 TX-4 路上。</div></div>
         </div>
-        <div class="todo" data-id="hotel-4" data-default="1">
+        <div class="todo" data-id="hotel-4" data-locked="1">
           <button class="box" aria-label="勾选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <div class="body"><div class="name">10. 夜4 · 9/7 Best Western Plus Austin Airport ✓</div>
+          <div class="body"><div class="name">10. 夜4 · 9/7 Best Western Plus Austin Airport</div>
           <div class="det">1805 Airport Commerce Dr · 人均 $50 · 入住 9/7 15:00 起 → 退房 9/8 12:00 前 · ☎ 512-386-5455。距 AUS 约 5 分钟；<b>05:00 就走，前一晚办好 express check-out</b>。议会大厦在进城路上先看完（21:30），再开 20 分钟来入住。</div></div>
         </div>
 
@@ -547,10 +552,13 @@
   try{ saved=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){}
   var items=[].slice.call(document.querySelectorAll('.todo'));
 
+  // 已订项以页面为准（多端一致）；未完成项的勾选只存本机
+  function isLocked(el){ return el.dataset.locked==='1'; }
   function stateOf(el){
+    if(isLocked(el)) return true;
     var id=el.dataset.id;
     if(id in saved) return !!saved[id];
-    return el.dataset.default==='1';
+    return false;
   }
   function persist(){
     try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
@@ -619,6 +627,7 @@
     items.forEach(function(el){
       var on=stateOf(el);
       el.classList.toggle('done',on);
+      el.classList.toggle('locked',isLocked(el));
       if(on) done++;
       if(on && el.dataset.id.indexOf('hotel-')===0) hotels++;
     });
@@ -634,7 +643,13 @@
     updateHero();
   }
   items.forEach(function(el){
-    el.querySelector('.box').addEventListener('click',function(){
+    var box=el.querySelector('.box');
+    if(isLocked(el)){
+      box.disabled=true;
+      box.title='已完成 · 由页面同步，多端一致';
+      return;
+    }
+    box.addEventListener('click',function(){
       saved[el.dataset.id]=!stateOf(el);
       persist(); refresh();
     });
